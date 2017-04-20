@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 00:30:13 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/20 00:56:59 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/20 01:58:55 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ int		main(int argc, char **argv)
 		return (1);
 	}
 	if (!(a = create_stack(array, argc - 1)))
+		return (1);
+	if (a->size <= 1)
+		return (0);
+	if (pushswap(a))
 		return (1);
 	free_stack(a);
 	free(array);

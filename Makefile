@@ -6,7 +6,7 @@
 #    By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/19 14:14:26 by varnaud           #+#    #+#              #
-#    Updated: 2017/04/20 00:47:00 by varnaud          ###   ########.fr        #
+#    Updated: 2017/04/20 01:54:40 by varnaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ CHECKER_SRC=stack.c \
 PUSHSWAP_SRC=main_pushswap.c \
 			utils.c \
 			operation.c \
-			stack.c
+			stack.c \
+			pushswap.c
 
 CHECKER_OBJ=$(CHECKER_SRC:.c=.o)
 PUSHSWAP_OBJ=$(PUSHSWAP_SRC:.c=.o)
