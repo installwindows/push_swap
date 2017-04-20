@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack.h                                            :+:      :+:    :+:   */
+/*   operation.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/19 15:23:55 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/19 22:02:51 by varnaud          ###   ########.fr       */
+/*   Created: 2017/04/19 20:54:37 by varnaud           #+#    #+#             */
+/*   Updated: 2017/04/19 20:55:43 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STACK_H
-# define STACK_H
-# include <stdlib.h>
+#ifndef OPERATION_H
+# define OPERATION_H
+# include "libft.h"
 
-typedef struct	s_stack
-{
-	int			*array;
-	int			max_size;
-	int			size;
-}				t_stack;
-
-int				push(t_stack *stack, int value);
-int				pop(t_stack *stack, int *value);
-t_stack			*create_stack(int *array, int size);
-void			free_stack(t_stack *stack);
+int		execute(const char *op, t_stack *a, t_stack *b);
+int		do_swap(t_stack *stack);
+int		do_push(t_stack *x, t_stack *y);
+int		do_rotate(t_stack *stack);
+int		do_rev_rotate(t_stack *stack);
 
 #endif

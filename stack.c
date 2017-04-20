@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 15:23:12 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/19 18:07:54 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/19 22:02:20 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,7 @@ int			pop(t_stack *stack, int *value)
 		return (1);
 	if (stack->max_size / 3 > stack->size)
 		if (update_stack(stack, stack->max_size / 3 + 1))
-				return (-1);
-	return (0);
-}
-
-int			peek(t_stack *stack, int *value)
-{
-	if (stack->size > 0)
-		*value = stack->array[stack->size - 1];
-	else
-		return (1);
+			return (-1);
 	return (0);
 }
 
