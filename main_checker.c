@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 15:52:54 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/20 00:52:11 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/20 01:34:52 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int			main(int argc, char **argv)
 		return (1);
 	if (!(b = create_stack(NULL, argc - 1)))
 		return (1);
-	if ((flag = checker(a, b, 1, flag)))
+	if ((flag = checker(a, b, 0, flag)))
 	{
 		ft_fprintf(2, flag > 0 ? "Error\n" : "Something terrible happened\n");
 		return (1);
