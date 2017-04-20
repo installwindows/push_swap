@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 15:52:54 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/19 23:56:33 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/20 00:21:58 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static int	parse_option(char ***av, int *ac, int *flag)
 	{
 		if (***av == '-')
 		{
-			if (IS_DIGIT(*(**av + 1)))
+			if (ft_isdigit(*(**av + 1)))
 				break ;
 			if (set_flag(**av, flag))
 				return (1);
@@ -112,10 +112,7 @@ int			main(int argc, char **argv)
 		return (1);
 	}
 	if (!(a = create_stack(numbers, argc - 1)))
-	{
-		free(numbers);
 		return (1);
-	}
 	if (!(b = create_stack(NULL, argc - 1)))
 		return (1);
 	if ((flag = checker(a, b, 1, flag)))
