@@ -6,14 +6,14 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 19:57:14 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/19 21:47:20 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/19 23:50:12 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "stack.h"
 #include "operation.h"
 
-int		execute(const char *op, t_stack *a, t_stack *b)
+int			execute(const char *op, t_stack *a, t_stack *b)
 {
 	if (!ft_strcmp(op, "sa"))
 		return (do_swap(a));
@@ -26,23 +26,23 @@ int		execute(const char *op, t_stack *a, t_stack *b)
 	else if (!ft_strcmp(op, "pb"))
 		return (do_push(b, a));
 	else if (!ft_strcmp(op, "ra"))
-		return (do_rotate(a));
+		return (do_rotate(a, 1));
 	else if (!ft_strcmp(op, "rb"))
-		return (do_rotate(b));
+		return (do_rotate(b, 1));
 	else if (!ft_strcmp(op, "rr"))
-		return (do_rotate(a) + do_rotate(b));
+		return (do_rotate(a, 1) + do_rotate(b, 1));
 	else if (!ft_strcmp(op, "rra"))
-		return (do_rev_rotate(a));
+		return (do_rotate(a, a->size - 1));
 	else if (!ft_strcmp(op, "rrb"))
-		return (do_rev_rotate(b));
+		return (do_rotate(b, b->size - 1));
 	else if (!ft_strcmp(op, "rrr"))
-		return (do_rev_rotate(a) + do_rev_rotate(b));
+		return (do_rotate(a, a->size - 1) + do_rotate(b, b->size - 1));
 	else
 		return (1);
 	return (0);
 }
 
-int		do_swap(t_stack *stack)
+int			do_swap(t_stack *stack)
 {
 	int		tmp;
 
@@ -54,7 +54,7 @@ int		do_swap(t_stack *stack)
 	return (0);
 }
 
-int		do_push(t_stack *x, t_stack *y)
+int			do_push(t_stack *x, t_stack *y)
 {
 	int		value;
 
@@ -67,43 +67,26 @@ int		do_push(t_stack *x, t_stack *y)
 	return (0);
 }
 
-int		do_rotate(t_stack *stack)
+static void	reverse_array(int *a, int i, int j)
 {
-	int		i;
-	int		prev;
-	int		next;
+	int		tmp;
 
-	if (stack->size <= 2)
-		return (do_swap(stack));
-	prev = stack->array[0];
-	stack->array[0] = stack->array[stack->size - 1];
-	i = 1;
-	while (i < stack->size - 1)
+	while (i < j)
 	{
-		next = stack->array[i];
-		stack->array[i] = prev;
-		prev = next;
+		tmp = a[i];
+		a[i] = a[j];
+		a[j] = tmp;
 		i++;
+		j--;
 	}
-	return (0);
 }
 
-int		do_rev_rotate(t_stack *stack)
+int			do_rotate(t_stack *stack, int d)
 {
-	int		i;
-	int		prev;
-	int		next;
-
 	if (stack->size <= 2)
 		return (do_swap(stack));
-	prev = stack->array[stack->size - 1];
-	stack->array[stack->size - 1] = stack->array[0];
-	i = stack->size - 1;
-	while (--i)
-	{
-		next = stack->array[i];
-		stack->array[i] = prev;
-		prev = next;
-	}
+	reverse_array(stack->array, stack->size - d, stack->size - 1);
+	reverse_array(stack->array, 0, stack->size - d - 1);
+	reverse_array(stack->array, 0, stack->size - 1);
 	return (0);
 }

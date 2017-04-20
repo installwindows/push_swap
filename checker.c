@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 22:04:36 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/19 23:15:15 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/19 23:23:44 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	print_stack(t_stack *a, t_stack *b)
 	int		i;
 
 	i = 0;
-	ft_printf("a            top          b\n");
+	ft_printf("-------------top-------------\n");
 	while (i < a->size && i < b->size)
 	{
 		ft_printf("% 11d  --- %d\n", a->array[a->size - i - 1],
@@ -34,7 +34,7 @@ static void	print_stack(t_stack *a, t_stack *b)
 		ft_printf("             --- %d\n", b->array[b->size - i - 1]);
 		i++;
 	}
-	ft_printf("------------bottom---------\n");
+	ft_printf("------------bottom-----------\n");
 }
 
 static void	check_stack(t_stack *a, int flag)
@@ -67,6 +67,8 @@ int			checker(t_stack *a, t_stack *b, int fd, int flag)
 
 	lst = NULL;
 	cur = lst;
+	if (flag & FLAG_V)
+		print_stack(a, b);
 	while ((r = gnl(fd, &line)))
 	{
 		if (r == -1)
@@ -89,11 +91,11 @@ int			checker(t_stack *a, t_stack *b, int fd, int flag)
 	cur = lst;
 	while (cur)
 	{
-		execute(cur->op, a, b);
+		if ((r = execute(cur->op, a, b)))
+			return (r);
 		cur = cur->next;
 	}
 	gnl(-42, NULL);
-	print_stack(a, a);
 	check_stack(a, flag);
 	return (0);
 }

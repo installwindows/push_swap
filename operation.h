@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 20:54:37 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/19 20:55:43 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/19 23:50:25 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 int		execute(const char *op, t_stack *a, t_stack *b);
 int		do_swap(t_stack *stack);
 int		do_push(t_stack *x, t_stack *y);
-int		do_rotate(t_stack *stack);
-int		do_rev_rotate(t_stack *stack);
+int		do_rotate(t_stack *stack, int d);
 
 #endif
