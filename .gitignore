@@ -3,3 +3,4 @@
 checker
 push_swap
 *.swp
+*.dSYM

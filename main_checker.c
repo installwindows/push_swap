@@ -6,12 +6,10 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 15:52:54 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/19 22:01:24 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/19 23:11:59 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "stack.h"
 #include "checker.h"
 
 static int	ft_natoi(char *s, int *n)
@@ -85,6 +83,8 @@ static int	parse_option(char ***av, int *ac, int *flag)
 	{
 		if (***av == '-')
 		{
+			if (IS_DIGIT(*(**av + 1)))
+				break ;
 			if (set_flag(**av, flag))
 				return (1);
 			(*ac)--;
@@ -116,12 +116,11 @@ int			main(int argc, char **argv)
 	}
 	if (!(b = create_stack(NULL, argc - 1)))
 		return (1);
-	//for (int i = 0; i < argc - 1; i++)
-	//	ft_printf("%d\n", numbers[i]);
-	//ft_printf("flag: %d\n", flag);
-	//exit(0);
-	if (checker(a, b, flag))
+	if ((flag = checker(a, b, 1, flag)))
+	{
+		ft_fprintf(2, flag > 0 ? "Error\n" : "Something terrible happened\n");
 		return (1);
+	}
 	free(numbers);
 	free_stack(a);
 	free_stack(b);

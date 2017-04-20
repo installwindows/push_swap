@@ -6,7 +6,7 @@
 #    By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/19 14:14:26 by varnaud           #+#    #+#              #
-#    Updated: 2017/04/19 20:57:25 by varnaud          ###   ########.fr        #
+#    Updated: 2017/04/19 22:24:04 by varnaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,9 @@
 CHECKER_NAME=checker
 
 CHECKER_SRC=stack.c \
-			checker.c \
-			operation.c
+			main_checker.c \
+			operation.c \
+			checker.c
 
 CHECKER_OBJ=$(CHECKER_SRC:.c=.o)
 CFLAGS=-Wall -Werror -Wextra -g -Ilibft
@@ -26,7 +27,7 @@ $(CHECKER_NAME): $(CHECKER_OBJ)
 
 all: $(CHECKER_NAME) libft.a operation.h stack.h
 
-$(CHECKER_OBJ): libft.a
+$(CHECKER_OBJ): checker.h
 
 libft.a:
 	make -C libft
