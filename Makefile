@@ -6,38 +6,52 @@
 #    By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/19 14:14:26 by varnaud           #+#    #+#              #
-#    Updated: 2017/04/19 22:24:04 by varnaud          ###   ########.fr        #
+#    Updated: 2017/04/20 00:47:00 by varnaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .PHONY: checker re clean fclean all
+
+PUSHSWAP_NAME=push_swap
 CHECKER_NAME=checker
 
 CHECKER_SRC=stack.c \
 			main_checker.c \
 			operation.c \
-			checker.c
+			checker.c \
+			utils.c
+
+PUSHSWAP_SRC=main_pushswap.c \
+			utils.c \
+			operation.c \
+			stack.c
 
 CHECKER_OBJ=$(CHECKER_SRC:.c=.o)
+PUSHSWAP_OBJ=$(PUSHSWAP_SRC:.c=.o)
 CFLAGS=-Wall -Werror -Wextra -g -Ilibft
 CC=gcc
 
-$(CHECKER_NAME): $(CHECKER_OBJ)
+all: $(CHECKER_NAME) $(PUSHSWAP_NAME) operation.h stack.h utils.h
+
+$(CHECKER_NAME): $(CHECKER_OBJ) libft.a
 	$(CC) $(CHECKER_OBJ) -Llibft -lft -o $(CHECKER_NAME)
 
-all: $(CHECKER_NAME) libft.a operation.h stack.h
+$(PUSHSWAP_NAME): $(PUSHSWAP_OBJ) libft.a
+	$(CC) $(PUSHSWAP_OBJ) -Llibft -lft -o $(PUSHSWAP_NAME)
 
 $(CHECKER_OBJ): checker.h
+
+$(PUSHSWAP_OBJ): pushswap.h
 
 libft.a:
 	make -C libft
 
 clean:
 	-make -C libft clean
-	-rm -rf $(CHECKER_OBJ)
+	-rm -rf $(CHECKER_OBJ) $(PUSHSWAP_OBJ)
 
 fclean:
 	-make -C libft fclean
-	-rm -rf $(CHECKER_NAME)
+	-rm -rf $(CHECKER_NAME) $(PUSHSWAP_NAME)
 
 re: fclean all

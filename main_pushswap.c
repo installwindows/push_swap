@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checker.h                                          :+:      :+:    :+:   */
+/*   main_pushswap.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/19 21:39:16 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/20 00:41:20 by varnaud          ###   ########.fr       */
+/*   Created: 2017/04/20 00:30:13 by varnaud           #+#    #+#             */
+/*   Updated: 2017/04/20 00:50:47 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CHECKER_H
-# define CHECKER_H
-# include "libft.h"
-# include "stack.h"
-# include "utils.h"
-# include "operation.h"
-# define FLAG_V 1
-# define FLAG_C 2
-# define FLAG_DEBUG 4
+#include "pushswap.h"
 
-typedef struct		s_oplst
+int		main(int argc, char **argv)
 {
-	char			*op;
-	struct s_oplst	*next;
-}					t_oplst;
+	int		*array;
 
-int					checker(t_stack *a, t_stack *b, int fd, int flag);
-
-#endif
+	if (argc == 1)
+		return (0);
+	if (!(array = parse_number(++argv, argc - 1)))
+	{
+		ft_fprintf(2, "Error\n");
+		return (1);
+	}
+	if (check_doublon(array, argc - 1))
+	{
+		ft_fprintf(2, "Doublon!\n");
+		return (1);
+	}
+	free(array);
+}

@@ -1,31 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checker.h                                          :+:      :+:    :+:   */
+/*   pushswap.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/19 21:39:16 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/20 00:41:20 by varnaud          ###   ########.fr       */
+/*   Created: 2017/04/20 00:40:09 by varnaud           #+#    #+#             */
+/*   Updated: 2017/04/20 00:40:58 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CHECKER_H
-# define CHECKER_H
+#ifndef PUSHSWAP_H
+# define PUSHSWAP_H
 # include "libft.h"
-# include "stack.h"
 # include "utils.h"
+# include "stack.h"
 # include "operation.h"
-# define FLAG_V 1
-# define FLAG_C 2
-# define FLAG_DEBUG 4
-
-typedef struct		s_oplst
-{
-	char			*op;
-	struct s_oplst	*next;
-}					t_oplst;
-
-int					checker(t_stack *a, t_stack *b, int fd, int flag);
 
 #endif
