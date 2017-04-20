@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 22:04:36 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/19 23:23:44 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/19 23:58:33 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ int			checker(t_stack *a, t_stack *b, int fd, int flag)
 	int		r;
 	char	*line;
 	t_oplst	*lst;
-	t_oplst	*cur;
+	t_oplst	**cur;
 
 	lst = NULL;
-	cur = lst;
+	cur = &lst;
 	if (flag & FLAG_V)
 		print_stack(a, b);
 	while ((r = gnl(fd, &line)))
@@ -81,19 +81,21 @@ int			checker(t_stack *a, t_stack *b, int fd, int flag)
 		}
 		else
 		{
-			if (!(cur = malloc(sizeof(t_oplst))))
+			if (!(*cur = malloc(sizeof(t_oplst))))
 				return (-1);
-			cur->op = line;
-			cur->next = NULL;
-			cur = cur->next;
+			(*cur)->op = line;
+			(*cur)->next = NULL;
+			cur = &(*cur)->next;
 		}
 	}
-	cur = lst;
-	while (cur)
+	cur = &lst;
+	while (*cur)
 	{
-		if ((r = execute(cur->op, a, b)))
+		if (flag & FLAG_DEBUG)
+			ft_printf("DEBUG: %s\n", (*cur)->op);
+		if ((r = execute((*cur)->op, a, b)))
 			return (r);
-		cur = cur->next;
+		cur = &(*cur)->next;
 	}
 	gnl(-42, NULL);
 	check_stack(a, flag);

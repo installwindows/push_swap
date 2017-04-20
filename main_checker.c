@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 15:52:54 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/19 23:11:59 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/19 23:56:33 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ static int	set_flag(char *a, int *flag)
 			*flag |= FLAG_V;
 		else if (*a == 'c')
 			*flag |= FLAG_C;
+		else if (*a == 'd')
+			*flag |= FLAG_DEBUG;
 		else
 			return (1);
 	}
