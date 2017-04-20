@@ -1,31 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack.h                                            :+:      :+:    :+:   */
+/*   ft_putdigit_fd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/19 15:23:55 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/19 18:08:12 by varnaud          ###   ########.fr       */
+/*   Created: 2017/03/21 19:03:11 by varnaud           #+#    #+#             */
+/*   Updated: 2017/04/11 17:53:40 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STACK_H
-# define STACK_H
+#include "libft.h"
 
-#include <stdlib.h>
-
-typedef struct	s_stack
+int		ft_putdigit_fd(long long nbr, int fd)
 {
-	int			*array;
-	int			max_size;
-	int			size;
-}				t_stack;
+	int		nbprint;
 
-int				push(t_stack *stack, int value);
-int				pop(t_stack *stack, int *value);
-int				peek(t_stack *stack, int *value);
-t_stack			*create_stack(int *array, int size);
-void			free_stack(t_stack *stack);
-
-#endif
+	if (nbr < 0)
+	{
+		nbprint = 1;
+		if (nbr <= -10)
+			nbprint = ft_putdigit_fd(nbr / -10, fd) + 1;
+		ft_putchar_fd(-(nbr % 10) + '0', fd);
+	}
+	else if (nbr >= 10)
+	{
+		nbprint = ft_putdigit_fd(nbr / 10, fd) + 1;
+		ft_putchar_fd(nbr % 10 + '0', fd);
+	}
+	else
+		nbprint = ft_putchar_fd(nbr + '0', fd);
+	return (nbprint);
+}

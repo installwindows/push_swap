@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack.h                                            :+:      :+:    :+:   */
+/*   ft_stradd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/19 15:23:55 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/19 18:08:12 by varnaud          ###   ########.fr       */
+/*   Created: 2016/10/06 17:59:27 by varnaud           #+#    #+#             */
+/*   Updated: 2017/04/11 17:50:50 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STACK_H
-# define STACK_H
+#include "libft.h"
 
-#include <stdlib.h>
-
-typedef struct	s_stack
+char	*ft_stradd(char **dest, char *src)
 {
-	int			*array;
-	int			max_size;
-	int			size;
-}				t_stack;
+	int		size;
+	char	*s;
 
-int				push(t_stack *stack, int value);
-int				pop(t_stack *stack, int *value);
-int				peek(t_stack *stack, int *value);
-t_stack			*create_stack(int *array, int size);
-void			free_stack(t_stack *stack);
-
-#endif
+	size = ft_strlen(*dest) + ft_strlen(src) + 1;
+	s = ft_strnew(size);
+	if (s == NULL)
+		return (NULL);
+	if (*dest != NULL)
+	{
+		ft_strcpy(s, *dest);
+		free(*dest);
+	}
+	ft_strcat(s, src);
+	*dest = s;
+	return (s);
+}

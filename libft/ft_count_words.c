@@ -1,31 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack.h                                            :+:      :+:    :+:   */
+/*   ft_count_words.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/19 15:23:55 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/19 18:08:12 by varnaud          ###   ########.fr       */
+/*   Created: 2016/11/24 01:04:31 by varnaud           #+#    #+#             */
+/*   Updated: 2016/11/24 02:24:51 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STACK_H
-# define STACK_H
+#include "libft.h"
 
-#include <stdlib.h>
-
-typedef struct	s_stack
+int		ft_count_words(char const *s, char c)
 {
-	int			*array;
-	int			max_size;
-	int			size;
-}				t_stack;
+	size_t	i;
+	int		nb_words;
+	int		new_word;
 
-int				push(t_stack *stack, int value);
-int				pop(t_stack *stack, int *value);
-int				peek(t_stack *stack, int *value);
-t_stack			*create_stack(int *array, int size);
-void			free_stack(t_stack *stack);
-
-#endif
+	i = 0;
+	nb_words = 0;
+	new_word = 1;
+	while (s[i])
+	{
+		if (new_word && s[i] != c)
+		{
+			nb_words++;
+			new_word = 0;
+		}
+		if (s[i] == c)
+			new_word = 1;
+		i++;
+	}
+	return (nb_words);
+}

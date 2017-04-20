@@ -1,31 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack.h                                            :+:      :+:    :+:   */
+/*   ft_putnbr_base.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/19 15:23:55 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/19 18:08:12 by varnaud          ###   ########.fr       */
+/*   Created: 2016/10/30 17:14:15 by varnaud           #+#    #+#             */
+/*   Updated: 2016/11/19 15:12:35 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STACK_H
-# define STACK_H
+#include "libft.h"
 
-#include <stdlib.h>
-
-typedef struct	s_stack
+int		ft_putnbr_base(long long nbr, int base)
 {
-	int			*array;
-	int			max_size;
-	int			size;
-}				t_stack;
+	int		n;
 
-int				push(t_stack *stack, int value);
-int				pop(t_stack *stack, int *value);
-int				peek(t_stack *stack, int *value);
-t_stack			*create_stack(int *array, int size);
-void			free_stack(t_stack *stack);
-
-#endif
+	if (nbr < 0)
+	{
+		n = 1;
+		ft_putchar('-');
+		if (nbr <= -base)
+			n = ft_putnbr_base(nbr / -base, base) + 1;
+		ft_putchar(ft_itoc(-(nbr % base)));
+	}
+	else if (nbr >= base)
+	{
+		n = ft_putnbr_base(nbr / base, base);
+		ft_putchar(ft_itoc(nbr % base));
+	}
+	else
+	{
+		n = 0;
+		ft_putchar(ft_itoc(nbr % base));
+	}
+	return (n + 1);
+}

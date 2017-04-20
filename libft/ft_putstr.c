@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack.h                                            :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/19 15:23:55 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/19 18:08:12 by varnaud          ###   ########.fr       */
+/*   Created: 2016/09/29 20:29:32 by varnaud           #+#    #+#             */
+/*   Updated: 2016/11/19 15:03:05 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STACK_H
-# define STACK_H
+#include "libft.h"
 
-#include <stdlib.h>
-
-typedef struct	s_stack
+ssize_t	ft_putstr(char const *s)
 {
-	int			*array;
-	int			max_size;
-	int			size;
-}				t_stack;
+	ssize_t	i;
 
-int				push(t_stack *stack, int value);
-int				pop(t_stack *stack, int *value);
-int				peek(t_stack *stack, int *value);
-t_stack			*create_stack(int *array, int size);
-void			free_stack(t_stack *stack);
-
-#endif
+	i = 0;
+	while (s[i])
+	{
+		ft_putchar(s[i]);
+		i++;
+	}
+	return (i);
+}

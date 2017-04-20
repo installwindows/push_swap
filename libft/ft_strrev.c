@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack.h                                            :+:      :+:    :+:   */
+/*   ft_strrev.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/19 15:23:55 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/19 18:08:12 by varnaud          ###   ########.fr       */
+/*   Created: 2016/10/04 16:16:03 by varnaud           #+#    #+#             */
+/*   Updated: 2016/10/04 16:18:52 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STACK_H
-# define STACK_H
-
-#include <stdlib.h>
-
-typedef struct	s_stack
+char	*ft_strrev(char *s)
 {
-	int			*array;
-	int			max_size;
-	int			size;
-}				t_stack;
+	int		i;
+	int		j;
+	char	tmp;
 
-int				push(t_stack *stack, int value);
-int				pop(t_stack *stack, int *value);
-int				peek(t_stack *stack, int *value);
-t_stack			*create_stack(int *array, int size);
-void			free_stack(t_stack *stack);
-
-#endif
+	i = 0;
+	while (s[i])
+		i++;
+	i--;
+	j = 0;
+	while (j < i)
+	{
+		tmp = s[i];
+		s[i] = s[j];
+		s[j] = tmp;
+		i--;
+		j++;
+	}
+	return (s);
+}

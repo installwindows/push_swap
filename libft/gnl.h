@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack.h                                            :+:      :+:    :+:   */
+/*   gnl.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/19 15:23:55 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/19 18:08:12 by varnaud          ###   ########.fr       */
+/*   Created: 2017/03/23 23:43:03 by varnaud           #+#    #+#             */
+/*   Updated: 2017/04/18 21:25:21 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STACK_H
-# define STACK_H
+#ifndef GNL_H
+# define GNL_H
+# define BUFF_SIZE 1024
 
-#include <stdlib.h>
-
-typedef struct	s_stack
+typedef struct	s_fd
 {
-	int			*array;
-	int			max_size;
+	int			fd;
+	int			i;
 	int			size;
-}				t_stack;
+	char		*buf;
+	struct s_fd	*next;
+}				t_fd;
 
-int				push(t_stack *stack, int value);
-int				pop(t_stack *stack, int *value);
-int				peek(t_stack *stack, int *value);
-t_stack			*create_stack(int *array, int size);
-void			free_stack(t_stack *stack);
+int				free_gnl(t_fd **list);
 
 #endif

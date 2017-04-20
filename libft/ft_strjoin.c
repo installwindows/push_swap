@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack.h                                            :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/19 15:23:55 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/19 18:08:12 by varnaud          ###   ########.fr       */
+/*   Created: 2016/09/28 21:55:15 by varnaud           #+#    #+#             */
+/*   Updated: 2016/09/28 22:04:00 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STACK_H
-# define STACK_H
+#include "libft.h"
 
-#include <stdlib.h>
-
-typedef struct	s_stack
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int			*array;
-	int			max_size;
-	int			size;
-}				t_stack;
+	char	*fresh;
+	size_t	i;
+	size_t	j;
 
-int				push(t_stack *stack, int value);
-int				pop(t_stack *stack, int *value);
-int				peek(t_stack *stack, int *value);
-t_stack			*create_stack(int *array, int size);
-void			free_stack(t_stack *stack);
-
-#endif
+	fresh = ft_strnew(ft_strlen(s1) + ft_strlen(s2));
+	if (fresh == NULL)
+		return (NULL);
+	j = 0;
+	i = 0;
+	while (s1[i])
+		fresh[j++] = s1[i++];
+	i = 0;
+	while (s2[i])
+		fresh[j++] = s2[i++];
+	return (fresh);
+}

@@ -1,31 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack.h                                            :+:      :+:    :+:   */
+/*   ft_revbits.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/19 15:23:55 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/19 18:08:12 by varnaud          ###   ########.fr       */
+/*   Created: 2017/01/27 23:11:41 by varnaud           #+#    #+#             */
+/*   Updated: 2017/02/02 17:42:29 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STACK_H
-# define STACK_H
-
-#include <stdlib.h>
-
-typedef struct	s_stack
+unsigned int	ft_revbits(unsigned int n)
 {
-	int			*array;
-	int			max_size;
-	int			size;
-}				t_stack;
+	const char	map[16] = {
+							0x0, 0x8, 0x4, 0xC, 0x2, 0xA, 0x6, 0xE,
+							0x1, 0x9, 0x5, 0xD, 0x3, 0xB, 0x7, 0xF
+	};
 
-int				push(t_stack *stack, int value);
-int				pop(t_stack *stack, int *value);
-int				peek(t_stack *stack, int *value);
-t_stack			*create_stack(int *array, int size);
-void			free_stack(t_stack *stack);
-
-#endif
+	return (map[n >> 28] | (map[n & 15] << 28) |
+			(map[n >> 24 & 15] << 4) | (map[n >> 4 & 15] << 24) |
+			(map[n >> 20 & 15] << 8) | (map[n >> 8 & 15] << 20) |
+			(map[n >> 16 & 15] << 12) | (map[n >> 12 & 15] << 16));
+}

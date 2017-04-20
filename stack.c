@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 15:23:12 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/19 16:03:08 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/19 18:07:54 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,15 @@ static int	update_stack(t_stack *stack, int max_size)
 	return (0);
 }
 
+void		free_stack(t_stack *stack)
+{
+	if (stack == NULL)
+		return ;
+	if (stack->array)
+		free(stack->array);
+	free(stack);
+}
+
 int			push(t_stack *stack, int value)
 {
 	if (stack->size == stack->max_size)
@@ -47,7 +56,7 @@ int			pop(t_stack *stack, int *value)
 		*value = stack->array[--stack->size];
 	else
 		return (1);
-	if (stack->size_max / 3 > stack->size)
+	if (stack->max_size / 3 > stack->size)
 		if (update_stack(stack, stack->max_size / 3 + 1))
 				return (-1);
 	return (0);
@@ -74,10 +83,12 @@ t_stack		*create_stack(int *array, int size)
 	stack->size = 0;
 	stack->array = malloc(sizeof(int) * stack->max_size);
 	if (stack->array == NULL)
-		return (NULL);
-	if (array)
 	{
-		i = 0;
+		free(stack);
+		return (NULL);
+	}
+	if (array && !(i = 0))
+	{
 		while (i < size)
 		{
 			stack->array[i] = array[i];
