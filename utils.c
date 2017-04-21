@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 00:34:11 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/20 01:53:47 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/21 00:47:46 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,20 +81,43 @@ int		check_doublon(int *a, int size)
 	return (0);
 }
 
-int		is_sort(int *a, int size)
+int		is_sort(int *a, int sizea, int *s, int sizes)
 {
 	int		i;
-	int		max;
 
-	max = 2147483647;
+	if (sizea != sizes)
+		return (0);
+	i = 0;
+	while (i < sizes)
+	{
+		if (a[i] != s[i])
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int		*sort(int *a, int size)
+{
+	int		i;
+	int		j;
+	int		tmp;
+
 	i = 0;
 	while (i < size)
 	{
-		if (a[i] <= max)
-			max = a[i];
-		else
-			break ;
+		j = i + 1;
+		while (j < size)
+		{
+			if (a[i] < a[j])
+			{
+				tmp = a[i];
+				a[i] = a[j];
+				a[j] = tmp;
+			}
+			j++;
+		}
 		i++;
 	}
-	return (i == size);
+	return (a);
 }

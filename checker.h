@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 21:39:16 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/20 01:56:07 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/21 00:42:24 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@
 # define FLAG_C 2
 # define FLAG_DEBUG 4
 
-int					checker(t_stack *a, t_stack *b, int fd, int flag);
+int					checker(t_stack *a, t_stack *b, int fd, t_flag *flag);
 
 #endif

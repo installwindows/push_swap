@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 01:42:08 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/20 02:24:31 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/21 01:07:51 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int			do_op(t_stack *a, t_stack *b, t_oplst **lst, const char *op)
 	return (execute(op, a, b));
 }
 
-int			naive_sort(t_stack *a, t_oplst **lst, int min, int max)
+int			naive_sort(t_stack *a, t_oplst **lst, t_flag *f)
 {
 	int		length;
 	int		top;
@@ -37,9 +37,9 @@ int			naive_sort(t_stack *a, t_oplst **lst, int min, int max)
 		return (1);
 	length = 0;
 	top = a->size - 1;
-	while (!is_sort(a->array, a->size))
+	while (!is_sort(a->array, a->size, f->sorted_array, f->size))
 	{
-		if (a->array[top] == max && a->array[top - 1] == min)
+		if (a->array[top] == f->max && a->array[top - 1] == f->min)
 			r = do_op(a, b, lst, "ra");
 		else if (a->array[top] > a->array[top - 1])
 			r = do_op(a, b, lst, "sa");
@@ -82,14 +82,30 @@ static int	biggest(int *a, int size)
 	}
 	return (max);
 }
-int			pushswap(t_stack *a)
+
+int			brute_force(t_stack *source, t_oplst **lst, t_flag *flag)
+{
+	int		length;
+	t_stack	*a;
+	t_stack	*b;
+
+	a = create_stack(source->array, source->size);
+	b = create_stack(NULL, source->size);
+	length = naive_sort(source, lst, flag);
+	if (!a || !b)
+		return (-1);
+	return (length);
+}
+
+int			pushswap(t_stack *a, t_flag *flag)
 {
 	t_oplst	*lst;
 	int		length;
 
+	flag->min = smallest(a->array, a->size);
+	flag->max = biggest(a->array, a->size);
 	lst = NULL;
-	length = naive_sort(a, &lst, smallest(a->array, a->size),
-								biggest(a->array, a->size));
+	length = naive_sort(a, &lst, flag);
 	if (length == -1)
 		return (-1);
 	//ft_printf("length: %d\n", length);

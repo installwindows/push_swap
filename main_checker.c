@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 15:52:54 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/20 01:34:52 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/21 00:42:28 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ static int	parse_option(char ***av, int *ac, int *flag)
 int			main(int argc, char **argv)
 {
 	int		*numbers;
-	int		flag;
+	t_flag	flag;
 	t_stack	*a;
 	t_stack	*b;
 
-	flag = 0;
-	if (parse_option(&argv, &argc, &flag) ||
+	flag.flag = 0;
+	if (parse_option(&argv, &argc, &flag.flag) ||
 		!(numbers = parse_number(argv, argc - 1)) ||
 		check_doublon(numbers, argc - 1))
 	{
@@ -67,9 +67,12 @@ int			main(int argc, char **argv)
 		return (1);
 	if (!(b = create_stack(NULL, argc - 1)))
 		return (1);
-	if ((flag = checker(a, b, 0, flag)))
+	flag.size = argc - 1;
+	flag.sorted_array = sort(numbers, argc - 1);
+	if ((flag.flag = checker(a, b, 0, &flag)))
 	{
-		ft_fprintf(2, flag > 0 ? "Error\n" : "Something terrible happened\n");
+		ft_fprintf(2, flag.flag > 0 ? "Error\n" :
+					"Something terrible happened\n");
 		return (1);
 	}
 	free(numbers);
