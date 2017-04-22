@@ -6,13 +6,14 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 22:04:36 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/21 00:45:53 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/21 16:46:55 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "checker.h"
 
-static int		print_stack(t_stack *a, t_stack *b)
+static int		print_stack(t_stack *a, t_stack *b, const char *c,
+													const char *op)
 {
 	int		i;
 
@@ -20,18 +21,21 @@ static int		print_stack(t_stack *a, t_stack *b)
 	ft_printf("-------------top-------------\n");
 	while (i < a->size && i < b->size)
 	{
-		ft_printf("% 11d  --- %d\n", a->array[a->size - i - 1],
-										b->array[b->size - i - 1]);
+		ft_printf("% 11d  --- %-13d%s%-s%s\n", a->array[a->size - i - 1],
+			b->array[b->size - i - 1], c,
+			(i == GTR(a->size, b->size) / 2) ? op : "", "\e[0m\e[39m");
 		i++;
 	}
 	while (i < a->size)
 	{
-		ft_printf("% 11d  ---\n", a->array[a->size - i - 1]);
+		ft_printf("% 11d  ---%s%14s%-s%s\n", a->array[a->size - i - 1], c, "",
+			(i == GTR(a->size, b->size) / 2) ? op : "", "\e[0m\e[39m");
 		i++;
 	}
 	while (i < b->size)
 	{
-		ft_printf("             --- %d\n", b->array[b->size - i - 1]);
+		ft_printf("             --- %-13d%s%-s%s\n", b->array[b->size - i - 1],
+			c, (i == GTR(a->size, b->size) / 2) ? op : "", "\e[0m\e[39m");
 		i++;
 	}
 	ft_printf("------------bottom-----------\n");
@@ -83,7 +87,7 @@ int				checker(t_stack *a, t_stack *b, int fd, t_flag *flag)
 	t_oplst	**cur;
 
 	if (flag->flag & FLAG_V && !(lst = NULL))
-		print_stack(a, b);
+		print_stack(a, b, flag->flag & FLAG_C ? "" : "", "");
 	cur = &lst;
 	while ((r = gnl(fd, &line)))
 	{
@@ -92,8 +96,9 @@ int				checker(t_stack *a, t_stack *b, int fd, t_flag *flag)
 		if (flag->flag & FLAG_V)
 		{
 			if ((r = execute(line, a, b)))
-				ft_printf("Invalid operation.\n");
-			print_stack(a, b);
+				print_stack(a, b, flag->flag & FLAG_C ? "\e[31m" : "", "Error");
+			else
+				print_stack(a, b, flag->flag & FLAG_C ? "\e[32m" : "", line);
 		}
 		else if (add_op(&cur, line))
 			return (-1);
