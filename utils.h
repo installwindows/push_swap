@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 00:35:04 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/21 00:56:40 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/21 20:05:18 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct		s_flag
 	int				min;
 	int				max;
 	int				flag;
+	char			*filename;
 }					t_flag;
 
 int					ft_natoi(char *s, int *n);

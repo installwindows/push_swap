@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 22:04:36 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/21 16:46:55 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/21 20:17:50 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ static int		eval_operation(t_oplst *cur, t_stack *a, t_stack *b,
 
 	while (cur)
 	{
-		if (flag->flag & FLAG_DEBUG)
-			ft_printf("DEBUG: %s\n", cur->op);
 		if ((r = execute(cur->op, a, b)))
 			return (r);
 		cur = cur->next;

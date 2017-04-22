@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 01:42:08 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/21 17:15:57 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/21 20:23:33 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,31 +86,23 @@ static int	biggest(int *a, int size)
 int			brute_force(t_stack *source, t_oplst **lst, t_flag *f)
 {
 	int			length;
-	const char	*oplst[] = {"sa", "sb", "ss", "pa", "pb", "ra", "rb", "rr",
-							"rra", "rrb", "rrr"};
+	//const char	*oplst[] = {"sa", "sb", "ss", "pa", "pb", "ra", "rb", "rr",
+	//						"rra", "rrb", "rrr"};
 	t_stack		*a;
 	t_stack		*b;
 	int			l;
 
 	a = create_stack(source->array, source->size);
 	b = create_stack(NULL, source->size);
-	length = naive_sort(source, lst, flag);
+	length = naive_sort(source, lst, f);
 	l = 0;
 	if (!a || !b)
 		return (-1);
 	while (!is_sort(a->array, a->size, f->sorted_array, f->size))
 	{
-
 		length++;
 	}
 	free_stack(b);
-	return (length);
-}
-
-static int	smallest(int *a, int size)
-{
-	int		i;
-
 	return (length);
 }
 

@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 15:52:54 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/21 00:42:28 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/21 20:25:43 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,29 +18,37 @@ static int	set_flag(char *a, int *flag)
 		return (1);
 	while (*++a)
 	{
-		if (*a == 'v')
+		if (*a == 'v' && !(*flag & FLAG_V))
 			*flag |= FLAG_V;
-		else if (*a == 'c')
+		else if (*a == 'c' && !(*flag & FLAG_C))
 			*flag |= FLAG_C;
-		else if (*a == 'd')
-			*flag |= FLAG_DEBUG;
+		else if (*a == 'f' && !(*flag & FLAG_F))
+			*flag |= FLAG_F;
 		else
 			return (1);
 	}
 	return (0);
 }
 
-static int	parse_option(char ***av, int *ac, int *flag)
+static int	parse_option(char ***av, int *ac, t_flag *flag)
 {
+	int		fileset;
+
+	fileset = 0;
 	while (*++(*av))
 	{
 		if (***av == '-')
 		{
 			if (ft_isdigit(*(**av + 1)))
 				break ;
-			if (set_flag(**av, flag))
+			if (set_flag(**av, &flag->flag))
 				return (1);
 			(*ac)--;
+			if (!fileset && flag->flag & FLAG_F && (fileset = 1))
+			{
+				(*ac)--;
+				flag->filename = *++(*av);
+			}
 		}
 		else
 			break ;
@@ -54,27 +62,24 @@ int			main(int argc, char **argv)
 	t_flag	flag;
 	t_stack	*a;
 	t_stack	*b;
+	int		fd;
 
-	flag.flag = 0;
-	if (parse_option(&argv, &argc, &flag.flag) ||
+	ft_memset(&flag, 0, sizeof(t_flag));
+	if (parse_option(&argv, &argc, &flag) ||
 		!(numbers = parse_number(argv, argc - 1)) ||
 		check_doublon(numbers, argc - 1))
-	{
-		ft_fprintf(2, "Error\n");
-		return (1);
-	}
+		return (ft_fprintf(2, "Error\n"));
 	if (!(a = create_stack(numbers, argc - 1)))
 		return (1);
 	if (!(b = create_stack(NULL, argc - 1)))
 		return (1);
 	flag.size = argc - 1;
 	flag.sorted_array = sort(numbers, argc - 1);
-	if ((flag.flag = checker(a, b, 0, &flag)))
-	{
-		ft_fprintf(2, flag.flag > 0 ? "Error\n" :
-					"Something terrible happened\n");
-		return (1);
-	}
+	if ((fd = flag.filename ? open(flag.filename, O_RDONLY) : 0) == -1)
+		return (ft_fprintf(2, "Error: Cannot open %s\n", flag.filename));
+	if ((flag.flag = checker(a, b, fd, &flag)))
+		return (ft_fprintf(2, "Error\n"));
+	close(fd);
 	free(numbers);
 	free_stack(a);
 	free_stack(b);
