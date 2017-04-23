@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 23:13:58 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/22 18:30:31 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/23 00:50:29 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,29 +19,73 @@ static int		set_fd(t_flag *f)
 	if (f->output && (f->fdout =
 					open(f->input, O_WRONLY | O_CREAT | O_TRUNC, 0644)) == -1)
 		return (1);
-	if (f->numfile && (f->fdnum = open(f->numfile, O_RDONLY)) == -1)
-		return (1);
 }
 
-static t_stack	*parse_number(char **argv, t_flag *f, int i)
+static void		*cleanup(char **split, int i, t_stack *stack, char *line)
 {
+	if (split)
+	{
+		while (i)
+			free(split[i--]);
+		free(split);
+	}
+	if (stack)
+		free(stack);
+	if (line)
+		free(line);
+	return (NULL);
+}
+
+static t_stack	*parse_numfile(t_flag *f)
+{
+	t_stack *stack;
 	char	**num;
-	int		*array;
-	int		n;
 	char	*line;
-	int		r;
+	int		i;
+	int		n;
+
+	if ((f->fdnum = open(f->numfile, O_RDONLY)) == -1)
+		return (NULL);
+	if ((stack = create_stack(NULL, 1024)))
+		return (NULL);
+	while ((r = gnl(f->fdnum, &line)) && r != -1)
+	{
+		num = ft_split(line, ft_strlen(line), NULL);
+		i = 0;
+		if (num)
+		{
+			while (num[i])
+			{
+				if (ft_natoi(num, &n) || push(stack, n))
+					return (cleanup(num, i, stack, line));
+				free(num[i++]);
+			}
+			free(num);
+		}
+		free(line);
+	}
+	return (stack);
+}
+
+static t_stack	*parse_number(char **argv, t_flag *f, int ac)
+{
+	t_stack	*stack;
+	char	**num;
+	char	*line;
+	int		i;
+	int		n;
 
 	if (f->numfile)
 	{
-		while ((r = gnl(f->fd, &line)) && r != -1)
-		{
-			num = ft_strsplit(line);
-			free(line);
-		}
+		if ((stack = parse_numfile(f)))
+			return (NULL);
 	}
 	else
 	{
+		if ((stack = parse_numarg(f, argv, ac)))
+			return (NULL);
 	}
+	stack->array = ft_re
 	if (size < 1 || numbers == NULL)
 		return (NULL);
 	array = malloc(sizeof(int) * size);

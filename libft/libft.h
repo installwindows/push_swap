@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/26 23:08:11 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/17 20:54:52 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/22 22:52:40 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <wchar.h>
 # include <stdarg.h>
 # include <errno.h>
+# define BLANK(c) (c == ' ' || c == '\t' || c == '\v' || c == '\r' || c == '\n')
 
 int					ft_printf(const char *format, ...);
 int					ft_fprintf(int fd, const char *format, ...);
@@ -137,5 +138,6 @@ char				*ft_strcjoin(const char *path, const char *file, char c);
 char				**ft_findenv(char **env, const char *key);
 int					ft_setenv(char ***env, const char *key, const char *value);
 int					ft_unsetenv(char ***env, const char *key);
+char				**ft_split(char *line, int len, int *words);
 
 #endif
