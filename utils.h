@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 00:35:04 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/21 23:45:44 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/22 18:07:45 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct		s_flag
 	char			*filename;
 	char			*input;
 	char			*output;
+	char			*numfile;
 	int				fdin;
 	int				fdout;
 	char			flagorder[1];
