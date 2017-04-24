@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 23:13:58 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/24 00:19:17 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/24 01:13:39 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,9 @@ static int		set_fd(t_flag *f)
 {
 	if (f->input && (f->fdin = open(f->input, O_RDONLY)) == -1)
 		return (1);
+	f->fdout = 1;
 	if (f->output && (f->fdout =
-					open(f->input, O_WRONLY | O_CREAT | O_TRUNC, 0644)) == -1)
+					open(f->output, O_WRONLY | O_CREAT | O_TRUNC, 0644)) == -1)
 		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 00:35:04 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/24 00:29:32 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/24 01:01:53 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,17 @@ typedef struct		s_flag
 {
 	t_stack			*a;
 	t_stack			*b;
-	int				*array;
-	int				*sorted_array;
-	int				size;
+	t_stack			*stack;
 	int				min;
 	int				max;
 	int				flag;
 	char			*flags;
-	char			*filename;
 	char			*input;
 	char			*output;
 	char			*numfile;
 	int				fdin;
 	int				fdout;
 	int				fdnum;
-	t_stack			*stack;
 	char			flagorder[1];
 }					t_flag;
 

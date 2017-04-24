@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 01:42:08 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/21 20:23:33 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/24 01:06:33 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int			naive_sort(t_stack *a, t_oplst **lst, t_flag *f)
 		return (1);
 	length = 0;
 	top = a->size - 1;
-	while (!is_sort(a->array, a->size, f->sorted_array, f->size))
+	while (!is_sort(a->array, a->size, f->stack->array, f->stack->size))
 	{
 		if (a->array[top] == f->max && a->array[top - 1] == f->min)
 			r = do_op(a, b, lst, "ra");
@@ -83,29 +83,6 @@ static int	biggest(int *a, int size)
 	return (max);
 }
 
-int			brute_force(t_stack *source, t_oplst **lst, t_flag *f)
-{
-	int			length;
-	//const char	*oplst[] = {"sa", "sb", "ss", "pa", "pb", "ra", "rb", "rr",
-	//						"rra", "rrb", "rrr"};
-	t_stack		*a;
-	t_stack		*b;
-	int			l;
-
-	a = create_stack(source->array, source->size);
-	b = create_stack(NULL, source->size);
-	length = naive_sort(source, lst, f);
-	l = 0;
-	if (!a || !b)
-		return (-1);
-	while (!is_sort(a->array, a->size, f->sorted_array, f->size))
-	{
-		length++;
-	}
-	free_stack(b);
-	return (length);
-}
-
 int			pushswap(t_stack *a, t_flag *flag)
 {
 	t_oplst	*lst;
@@ -120,7 +97,7 @@ int			pushswap(t_stack *a, t_flag *flag)
 	//ft_printf("length: %d\n", length);
 	while (lst)
 	{
-		ft_printf("%s\n", lst->op);
+		ft_fprintf(flag->fdout, "%s\n", lst->op);
 		lst = lst->next;
 	}
 	return (0);
