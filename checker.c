@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 22:04:36 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/23 23:05:47 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/24 15:40:34 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,22 @@ static int		print_stack(t_stack *a, t_stack *b, const char *c,
 	return (0);
 }
 
+static int		cleanup(t_oplst *lst)
+{
+	t_oplst	*cur;
+
+	while (lst)
+	{
+		cur = lst->next;
+		if (lst->op)
+			free(lst->op);
+		free(lst);
+		lst = cur;
+	}
+	gnl(-42, NULL);
+	return (0);
+}
+
 static void		check_stack(t_stack *a, t_flag *flag)
 {
 	if (is_sort(a->array, a->size, flag->stack->array, flag->stack->size))
@@ -54,16 +70,20 @@ static int		eval_operation(t_oplst *cur, t_stack *a, t_stack *b,
 				t_flag *flag)
 {
 	int		r;
+	t_oplst	*lst;
 
+	lst = cur;
+	r = 0;
 	while (cur)
 	{
 		if ((r = execute(cur->op, a, b)))
-			return (r);
+			break ;
 		cur = cur->next;
 	}
-	gnl(-42, NULL);
-	check_stack(a, flag);
-	return (0);
+	if (!r)
+		check_stack(a, flag);
+	cleanup(lst);
+	return (r);
 }
 
 static int		add_op(t_oplst ***cur, char *line)
@@ -85,12 +105,13 @@ int				checker(t_stack *a, t_stack *b, int fd, t_flag *flag)
 	t_oplst	**cur;
 
 	if (flag->flag & FLAG_V && !(lst = NULL))
-		print_stack(a, b, flag->flag & FLAG_C ? "" : "", "");
+		print_stack(a, b, flag->flag & FLAG_C ? "\e[1m\e[91m" : "", "");
+	lst = NULL;
 	cur = &lst;
 	while ((r = gnl(fd, &line)))
 	{
 		if (r == -1)
-			return (-1);
+			return (!cleanup(lst));
 		if (flag->flag & FLAG_V)
 		{
 			if ((r = execute(line, a, b)))
@@ -99,7 +120,7 @@ int				checker(t_stack *a, t_stack *b, int fd, t_flag *flag)
 				print_stack(a, b, flag->flag & FLAG_C ? "\e[32m" : "", line);
 		}
 		else if (add_op(&cur, line))
-			return (-1);
+			return (!cleanup(lst));
 	}
 	return (eval_operation(lst, a, b, flag));
 }

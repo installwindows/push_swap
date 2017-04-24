@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 15:52:54 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/24 00:20:12 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/24 15:27:52 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ static int	cleanup(t_flag *f)
 {
 	if (f)
 	{
+		free_stack(f->stack);
 		free_stack(f->a);
 		free_stack(f->b);
-		free_stack(f->stack);
 		if (f->flags)
 			free(f->flags);
 		if (f->fdin > 1)
