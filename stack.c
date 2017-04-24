@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 15:23:12 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/19 22:02:20 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/24 00:25:06 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,14 @@ static int	update_stack(t_stack *stack, int max_size)
 	return (0);
 }
 
-void		free_stack(t_stack *stack)
+void		*free_stack(t_stack *stack)
 {
 	if (stack == NULL)
-		return ;
+		return (NULL);
 	if (stack->array)
 		free(stack->array);
 	free(stack);
+	return (NULL);
 }
 
 int			push(t_stack *stack, int value)

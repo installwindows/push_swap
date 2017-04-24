@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 22:04:36 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/21 20:17:50 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/23 23:05:47 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int		print_stack(t_stack *a, t_stack *b, const char *c,
 
 static void		check_stack(t_stack *a, t_flag *flag)
 {
-	if (is_sort(a->array, a->size, flag->sorted_array, flag->size))
+	if (is_sort(a->array, a->size, flag->stack->array, flag->stack->size))
 		ft_printf(flag->flag & FLAG_C ? "\e[1m\e[92mOK\e[0m\e[39m\n" : "OK\n");
 	else
 		ft_printf(flag->flag & FLAG_C ? "\e[1m\e[91mKO\e[0m\e[39m\n" : "KO\n");

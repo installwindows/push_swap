@@ -6,11 +6,11 @@
 #    By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/19 14:14:26 by varnaud           #+#    #+#              #
-#    Updated: 2017/04/20 01:54:40 by varnaud          ###   ########.fr        #
+#    Updated: 2017/04/23 22:38:54 by varnaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-.PHONY: checker re clean fclean all
+.PHONY: checker push_swap re clean fclean all
 
 PUSHSWAP_NAME=push_swap
 CHECKER_NAME=checker
@@ -19,7 +19,9 @@ CHECKER_SRC=stack.c \
 			main_checker.c \
 			operation.c \
 			checker.c \
-			utils.c
+			utils.c \
+			parse_argument.c \
+			parse_number.c
 
 PUSHSWAP_SRC=main_pushswap.c \
 			utils.c \

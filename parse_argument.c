@@ -6,11 +6,25 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 23:13:58 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/23 00:50:29 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/24 00:19:17 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "parse.h"
+
+static void		*cleanup(t_flag *f)
+{
+	if (f)
+	{
+		free(f->flags);
+		if (f->fdin > 1)
+			close(f->fdin);
+		if (f->fdout > 1)
+			close(f->fdout);
+		free(f);
+	}
+	return (NULL);
+}
 
 static int		set_fd(t_flag *f)
 {
@@ -19,121 +33,39 @@ static int		set_fd(t_flag *f)
 	if (f->output && (f->fdout =
 					open(f->input, O_WRONLY | O_CREAT | O_TRUNC, 0644)) == -1)
 		return (1);
-}
-
-static void		*cleanup(char **split, int i, t_stack *stack, char *line)
-{
-	if (split)
-	{
-		while (i)
-			free(split[i--]);
-		free(split);
-	}
-	if (stack)
-		free(stack);
-	if (line)
-		free(line);
-	return (NULL);
-}
-
-static t_stack	*parse_numfile(t_flag *f)
-{
-	t_stack *stack;
-	char	**num;
-	char	*line;
-	int		i;
-	int		n;
-
-	if ((f->fdnum = open(f->numfile, O_RDONLY)) == -1)
-		return (NULL);
-	if ((stack = create_stack(NULL, 1024)))
-		return (NULL);
-	while ((r = gnl(f->fdnum, &line)) && r != -1)
-	{
-		num = ft_split(line, ft_strlen(line), NULL);
-		i = 0;
-		if (num)
-		{
-			while (num[i])
-			{
-				if (ft_natoi(num, &n) || push(stack, n))
-					return (cleanup(num, i, stack, line));
-				free(num[i++]);
-			}
-			free(num);
-		}
-		free(line);
-	}
-	return (stack);
-}
-
-static t_stack	*parse_number(char **argv, t_flag *f, int ac)
-{
-	t_stack	*stack;
-	char	**num;
-	char	*line;
-	int		i;
-	int		n;
-
-	if (f->numfile)
-	{
-		if ((stack = parse_numfile(f)))
-			return (NULL);
-	}
-	else
-	{
-		if ((stack = parse_numarg(f, argv, ac)))
-			return (NULL);
-	}
-	stack->array = ft_re
-	if (size < 1 || numbers == NULL)
-		return (NULL);
-	array = malloc(sizeof(int) * size);
-	if (array == NULL)
-		return (NULL);
-	while (size)
-	{
-		if (ft_natoi(*numbers, &n))
-		{
-			free(array);
-			return (NULL);
-		}
-		array[--size] = n;
-		numbers++;
-	}
-	return (array);
+	return (0);
 }
 
 static int		set_file(char **argv, t_flag *f, int argc, int *i)
 {
 	int		j;
+	int		k;
 
 	j = 0;
+	k = *i;
 	while (argv[*i][j++])
-	{
 		if (argv[*i][j] == 'i')
 		{
-			if (*i == argc - 1)
+			if (k == argc - 1)
 				return (1);
-			f->input = argv[++(*i)];
+			f->input = argv[++k];
 		}
 		else if (argv[*i][j] == 'o')
 		{
-			if (*i == argc - 1)
+			if (k == argc - 1)
 				return (1);
-			f->output = argv[++(*i)];
+			f->output = argv[++k];
 		}
 		else if (argv[*i][j] == 'n')
 		{
-			if (*i == argc - 1)
+			if (k == argc - 1)
 				return (1);
-			f->numfile = argv[++(*i)];
+			f->numfile = argv[++k];
 		}
-	}
-	return (0);
+	return (!(*i = k));
 }
 
-static int		set_flag(char *av, t_flag *f)
+static int		set_flag(char *a, t_flag *f)
 {
 	if (*(a + 1) == '\0')
 		return (1);
@@ -145,28 +77,27 @@ static int		set_flag(char *av, t_flag *f)
 	return (0);
 }
 
-t_flag			*parse_argument(int ac, char **av, char *flags)
+t_flag			*parse_argument(int argc, char **argv, const char *flags)
 {
 	t_flag	*f;
 	int		i;
 
-	if ((f = ft_memalloc(sizeof(t_flag) + ft_strlen(flags))))
+	if (!(f = ft_memalloc(sizeof(t_flag) + ft_strlen(flags))))
 		return (NULL);
-	f->flags = flags;
+	if (!(f->flags = ft_strdup(flags)))
+		return (NULL);
 	i = 0;
-	while (++i < ac)
-	{
-		if (argv[i] == '-')
+	while (++i < argc)
+		if (argv[i][0] == '-')
 		{
+			if (ft_isdigit(argv[i][1]))
+				break ;
 			if (set_flag(argv[i], f) || set_file(argv, f, argc, &i))
 				return (cleanup(f));
 		}
 		else
 			break ;
-	}
-	if (set_fd(f))
-		return (cleanup(f));
-	if (parse_number(argv, f, i))
+	if (!(f->stack = parse_number(argv, f, i)) || set_fd(f))
 		return (cleanup(f));
 	return (f);
 }

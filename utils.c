@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 00:34:11 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/21 00:47:46 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/24 00:32:28 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int		ft_natoi(char *s, int *n)
 		*n *= -1;
 	return (0);
 }
-
+/*
 int		*parse_number(char **numbers, int size)
 {
 	int		*array;
@@ -60,7 +60,7 @@ int		*parse_number(char **numbers, int size)
 	}
 	return (array);
 }
-
+*/
 int		check_doublon(int *a, int size)
 {
 	int		i;
@@ -118,6 +118,27 @@ int		*sort(int *a, int size)
 			j++;
 		}
 		i++;
+	}
+	return (a);
+}
+
+int		*revarr(int *a, int size)
+{
+	int		i;
+	int		j;
+	int		tmp;
+
+	if (!a)
+		return (NULL);
+	i = 0;
+	j = size - 1;
+	while (i < j)
+	{
+		tmp = a[i];
+		a[i] = a[j];
+		a[j] = tmp;
+		i++;
+		j--;
 	}
 	return (a);
 }
