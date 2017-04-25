@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 22:04:36 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/24 22:37:44 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/24 22:45:35 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void		print_stack(t_stack *a, t_stack *b, t_flag *f, const char *op)
 	ft_fprintf(f->fdout, "------------bottom-----------\n");
 }
 
-static int		cleanup(t_oplst *lst)
+static int		cleanup(t_oplst *lst, char *line)
 {
 	t_oplst	*cur;
 
@@ -53,6 +53,8 @@ static int		cleanup(t_oplst *lst)
 		free(lst);
 		lst = cur;
 	}
+	if (line)
+		free(line);
 	gnl(-42, NULL);
 	return (0);
 }
@@ -83,7 +85,7 @@ static int		eval_operation(t_oplst *cur, t_stack *a, t_stack *b,
 	}
 	if (!r)
 		check_stack(a, flag);
-	cleanup(lst);
+	cleanup(lst, NULL);
 	return (r);
 }
 
@@ -105,14 +107,13 @@ int				checker(t_stack *a, t_stack *b, int fd, t_flag *flag)
 	t_oplst	*lst;
 	t_oplst	**cur;
 
-	if (flag->flag & FLAG_V && !(lst = NULL))
+	if (!(lst = NULL) && flag->flag & FLAG_V)
 		print_stack(a, b, flag, "");
-	lst = NULL;
 	cur = &lst;
 	while ((r = gnl(fd, &line)))
 	{
 		if (r == -1)
-			return (!cleanup(lst));
+			return (!cleanup(lst, line));
 		if (flag->flag & FLAG_V)
 		{
 			if ((r = execute(line, a, b)))
@@ -121,7 +122,8 @@ int				checker(t_stack *a, t_stack *b, int fd, t_flag *flag)
 				print_stack(a, b, flag, line);
 		}
 		else if (add_op(&cur, line))
-			return (!cleanup(lst));
+			return (!cleanup(lst, line));
+		free(line);
 	}
 	return (eval_operation(lst, a, b, flag));
 }
