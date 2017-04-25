@@ -6,11 +6,25 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 01:42:08 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/24 01:06:33 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/25 12:03:31 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
+
+int			cleanup(t_oplst *lst)
+{
+	t_oplst	*cur;
+
+	while (lst)
+	{
+		cur = lst->next;
+		free(lst->op);
+		free(lst);
+		lst = cur;
+	}
+	return (0);
+}
 
 int			do_op(t_stack *a, t_stack *b, t_oplst **lst, const char *op)
 {
@@ -86,6 +100,7 @@ static int	biggest(int *a, int size)
 int			pushswap(t_stack *a, t_flag *flag)
 {
 	t_oplst	*lst;
+	t_oplst	*cur;
 	int		length;
 
 	flag->min = smallest(a->array, a->size);
@@ -95,10 +110,12 @@ int			pushswap(t_stack *a, t_flag *flag)
 	if (length == -1)
 		return (-1);
 	//ft_printf("length: %d\n", length);
+	cur = lst;
 	while (lst)
 	{
 		ft_fprintf(flag->fdout, "%s\n", lst->op);
 		lst = lst->next;
 	}
+	cleanup(cur);
 	return (0);
 }
