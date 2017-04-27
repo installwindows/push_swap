@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 15:52:54 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/24 15:27:52 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/26 22:28:29 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,14 @@ int			main(int argc, char **argv)
 	set_flag(flag);
 	//print_flag(flag);
 	//exit(0);
+	if (flag->stack->size % 2 == 0)
+	{
+		flag->med = ((float)flag->stack->array[flag->stack->size / 2] +
+			(float)flag->stack->array[(flag->stack->size) / 2 - 1]) / 2.0;
+	}
+	else
+		flag->med = flag->stack->array[flag->stack->size / 2];
+	ft_printf("med: %d\n", flag->med);
 	checker(flag->a, flag->b, flag->fdin, flag);
 	cleanup(flag);
 	return (0);

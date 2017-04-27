@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 22:04:36 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/24 22:45:35 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/26 22:18:45 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int		cleanup(t_oplst *lst, char *line)
 
 static void		check_stack(t_stack *a, t_flag *flag)
 {
-	if (is_sort(a->array, a->size, flag->stack->array, flag->stack->size))
+	if (array_cmp(a->array, a->size, flag->stack->array, flag->stack->size))
 		ft_fprintf(flag->fdout,
 				flag->flag & FLAG_C ? "\e[1m\e[92mOK\e[0m\e[39m\n" : "OK\n");
 	else

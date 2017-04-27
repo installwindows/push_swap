@@ -6,7 +6,7 @@
 #    By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/19 14:14:26 by varnaud           #+#    #+#              #
-#    Updated: 2017/04/24 00:58:08 by varnaud          ###   ########.fr        #
+#    Updated: 2017/04/26 22:14:14 by varnaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ CHECKER_SRC=stack.c \
 			checker.c \
 			utils.c \
 			parse_argument.c \
-			parse_number.c
+			parse_number.c \
+			stack_info.c
 
 PUSHSWAP_SRC=main_pushswap.c \
 			utils.c \
@@ -29,7 +30,8 @@ PUSHSWAP_SRC=main_pushswap.c \
 			stack.c \
 			pushswap.c \
 			parse_argument.c \
-			parse_number.c
+			parse_number.c \
+			stack_info.c
 
 CHECKER_OBJ=$(CHECKER_SRC:.c=.o)
 PUSHSWAP_OBJ=$(PUSHSWAP_SRC:.c=.o)
