@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 00:35:04 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/24 01:01:53 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/26 15:24:44 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct		s_flag
 	t_stack			*stack;
 	int				min;
 	int				max;
+	int				med;
 	int				flag;
 	char			*flags;
 	char			*input;
@@ -41,8 +42,10 @@ typedef struct		s_flag
 
 int					ft_natoi(char *s, int *n);
 int					check_doublon(int *a, int size);
-int					is_sort(int *a, int sizea, int *s, int sizes);
+int					array_cmp(int *a, int sizea, int *s, int sizes);
 int					*sort(int *a, int size);
 int					*revarr(int *a, int size);
+int					smallest(int *a, int size);
+int					biggest(int *a, int size);
 
 #endif

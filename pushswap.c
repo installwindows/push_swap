@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 01:42:08 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/24 01:06:33 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/26 15:24:59 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int			naive_sort(t_stack *a, t_oplst **lst, t_flag *f)
 		return (1);
 	length = 0;
 	top = a->size - 1;
-	while (!is_sort(a->array, a->size, f->stack->array, f->stack->size))
+	while (!array_cmp(a->array, a->size, f->stack->array, f->stack->size))
 	{
 		if (a->array[top] == f->max && a->array[top - 1] == f->min)
 			r = do_op(a, b, lst, "ra");
@@ -53,35 +53,7 @@ int			naive_sort(t_stack *a, t_oplst **lst, t_flag *f)
 	return (length);
 }
 
-static int	smallest(int *a, int size)
-{
-	int		i;
-	int		min = 2147483647;
 
-	i = 0;
-	while (i < size)
-	{
-		if (a[i] < min)
-			min = a[i];
-		i++;
-	}
-	return (min);
-}
-
-static int	biggest(int *a, int size)
-{
-	int		i;
-	int		max = -2147483648;
-
-	i = 0;
-	while (i < size)
-	{
-		if (a[i] > max)
-			max = a[i];
-		i++;
-	}
-	return (max);
-}
 
 int			pushswap(t_stack *a, t_flag *flag)
 {

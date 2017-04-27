@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 15:23:12 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/24 00:25:06 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/04/26 15:30:06 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int			push(t_stack *stack, int value)
 	if (stack->size == stack->max_size)
 		if (update_stack(stack, stack->max_size * 2 + 1))
 			return (-1);
+	stack->top = stack->size;
 	stack->array[stack->size++] = value;
 	return (0);
 }
@@ -54,11 +55,14 @@ int			push(t_stack *stack, int value)
 int			pop(t_stack *stack, int *value)
 {
 	if (stack->size > 0)
+	{
 		*value = stack->array[--stack->size];
+		stack->top = stack->size - 1;
+	}
 	else
 		return (1);
 	if (stack->max_size / 3 > stack->size)
-		if (update_stack(stack, stack->max_size / 3 + 1))
+		if (update_stack(stack, stack->max_size / 2 + 1))
 			return (-1);
 	return (0);
 }
@@ -89,5 +93,6 @@ t_stack		*create_stack(int *array, int size)
 		stack->size = size;
 		return (stack);
 	}
+	stack->top = stack->size - 1;
 	return (stack);
 }
