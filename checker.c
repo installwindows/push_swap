@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 22:04:36 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/30 18:33:43 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/05/16 20:58:39 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,11 @@ static int		cleanup(t_oplst *lst, char *line)
 	while (lst)
 	{
 		cur = lst->next;
-		if (lst->op)
-			free(lst->op);
+		free(lst->op);
 		free(lst);
 		lst = cur;
 	}
-	if (line)
-		free(line);
+	free(line);
 	gnl(-42, NULL);
 	return (0);
 }
@@ -94,7 +92,7 @@ static int		add_op(t_oplst ***cur, char *line)
 	(**cur) = malloc(sizeof(t_oplst));
 	if (!(**cur))
 		return (-1);
-	(**cur)->op = line;
+	(**cur)->op = ft_strdup(line);
 	(**cur)->next = NULL;
 	*cur = &(**cur)->next;
 	return (0);
@@ -130,6 +128,6 @@ int				checker(t_stack *a, t_stack *b, int fd, t_flag *flag)
 			return (!cleanup(lst, line));
 		free(line);
 	}
-	ft_fprintf("Length: %d\n", LENGTH);
+	ft_printf("Length: %d\n", LENGTH);
 	return (eval_operation(lst, a, b, flag));
 }
