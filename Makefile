@@ -6,7 +6,7 @@
 #    By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/19 14:14:26 by varnaud           #+#    #+#              #
-#    Updated: 2017/04/26 22:14:14 by varnaud          ###   ########.fr        #
+#    Updated: 2017/05/19 18:07:42 by varnaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ PUSHSWAP_SRC=main_pushswap.c \
 
 CHECKER_OBJ=$(CHECKER_SRC:.c=.o)
 PUSHSWAP_OBJ=$(PUSHSWAP_SRC:.c=.o)
-CFLAGS=-Wall -Werror -Wextra -g -Ilibft
+CFLAGS=-Wall -Wextra -g -Ilibft
 CC=gcc
 
 all: $(CHECKER_NAME) $(PUSHSWAP_NAME) operation.h stack.h utils.h

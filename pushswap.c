@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 01:42:08 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/26 15:24:59 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/05/19 23:10:46 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int			cleanup(t_oplst *lst)
 	}
 	return (0);
 }
-
+/*
 int			do_op(t_stack *a, t_stack *b, t_oplst **lst, const char *op)
 {
 	t_oplst	**cur;
@@ -39,7 +39,16 @@ int			do_op(t_stack *a, t_stack *b, t_oplst **lst, const char *op)
 	(*cur)->next = NULL;
 	return (execute(op, a, b));
 }
-
+*/
+int			do_op(t_stack *a, t_stack *b, t_oplst ***cur, const char *op)
+{
+	**cur = malloc(sizeof(t_oplst));
+	(**cur)->op = ft_strdup(op);
+	(**cur)->next = NULL;
+	*cur = &(**cur)->next;
+	return (execute(op, a, b));
+}
+/*
 int			naive_sort(t_stack *a, t_oplst **lst, t_flag *f)
 {
 	int		length;
@@ -65,22 +74,48 @@ int			naive_sort(t_stack *a, t_oplst **lst, t_flag *f)
 	}
 	free_stack(b);
 	return (length);
-}
+}*/
+#define HEAD(a, n) a->array[a->size - 1 - n]
+#define TAIL(a, n) a->array[n]
+#define MIN f->min
+static void	sort_stack(t_stack *a, t_oplst **lst, t_flag *f)
+{
+	t_stack	*b;
+	t_oplst	**cur;
 
+	cur = lst;
+	b = create_stack(NULL, a->size);
+	while (!(array_cmp(f->stack->array, f->stack->size, a->array, a->size)))
+	{
+		if (HEAD(a, 0) == MAX && HEAD(a, 1) == MIN)
+			do_op(a, b, &cur, "ra");
+		if (HEAD(a, 0) + 1 != HEAD(a, 1) && HEAD(a, 1) != MIN)
+			do_op(a, b, &cur, "pb");
+		else
+			do_op(a, b, &cur, "ra");
+		if (b->size && HEAD(b, 0) + 1 == HEAD(a, 0))
+			do_op(a, b, &cur, "pa");
+		else if (b->size && HEAD(b, 0) + 1 != HEAD(a, 0))
+			do_op(a, b, &cur, "rb");
+	}
+	free_stack(b);
+}
 
 
 int			pushswap(t_stack *a, t_flag *flag)
 {
 	t_oplst	*lst;
 	t_oplst	*cur;
-	int		length;
+	//int		length;
 
 	flag->min = smallest(a->array, a->size);
 	flag->max = biggest(a->array, a->size);
 	lst = NULL;
-	length = naive_sort(a, &lst, flag);
-	if (length == -1)
-		return (-1);
+	//length = naive_sort(a, &lst, flag);
+	sort_stack(a, &lst, flag);
+	ft_printf("Done\n");
+	//if (length == -1)
+	//	return (-1);
 	//ft_printf("length: %d\n", length);
 	cur = lst;
 	while (lst)

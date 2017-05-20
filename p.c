@@ -6,10 +6,9 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/17 20:28:55 by varnaud           #+#    #+#             */
-/*   Updated: 2017/05/17 21:29:39 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/05/18 21:44:54 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 typedef struct		s_num
 {
@@ -22,9 +21,8 @@ typedef struct		s_num
 typedef struct		s_stack
 {
 	int				size;
-	t_num			*head;
-	t_num			*tail;
 	t_num			*list;
+	t_num			*tail;
 }					t_stack;
 
 t_num	*new_t_num(int *input, int s_input, int *sorted, int s_sorted)
