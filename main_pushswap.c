@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 00:30:13 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/24 01:00:48 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/05/21 03:36:54 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ static void	set_flag(t_flag *f)
 			f->flag |= FLAG_O;
 		else if (c == 'n')
 			f->flag |= FLAG_N;
+		else if (c == 'd')
+			f->flag |= FLAG_D;
 		i++;
 	}
 }
@@ -48,7 +50,7 @@ int		main(int argc, char **argv)
 {
 	t_flag	*flag;
 
-	if (!(flag = parse_argument(argc, argv, "no")))
+	if (!(flag = parse_argument(argc, argv, "nod")))
 	{
 		ft_fprintf(2, "Error\n");
 		return (1);

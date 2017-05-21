@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 00:40:09 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/24 00:57:44 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/05/21 03:36:21 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "parse.h"
 # define FLAG_O 1
 # define FLAG_N 2
+# define FLAG_D 3
 
 int		pushswap(t_stack *a, t_flag *flag);
 
