@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 01:42:08 by varnaud           #+#    #+#             */
-/*   Updated: 2017/05/19 23:10:46 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/05/20 19:12:55 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,62 @@ int			naive_sort(t_stack *a, t_oplst **lst, t_flag *f)
 	free_stack(b);
 	return (length);
 }*/
+static int	find_next_to_sort(t_stack *a, int *i, int *dir)
+{
+	int		n;
+	int		k;
+
+	n = 0;
+	k = 0;
+	while (k < a->size)
+	{
+		if (a->array[k] == *i)
+			break ;
+		k++;
+	}
+	while (1)
+	{
+		k++;
+		if (k >= a->size)
+			k = 0;
+		if (a->array[k] != *i + 1)
+			break ;
+		else
+			*++i;
+	}
+}
 #define HEAD(a, n) a->array[a->size - 1 - n]
 #define TAIL(a, n) a->array[n]
 #define MIN f->min
+static void	sort_stack(t_stack *a, t_oplst **lst, t_flag *f)
+{
+	t_stack	*b;
+	t_oplst	**cur;
+	int		i;
+	int		n;
+	int		dir;
+
+	cur = lst;
+	b = create_stack(NULL, a->size);
+	i = 1;
+	while (!(array_cmp(f->stack->array, f->stack->size, a->array, a->size)))
+	{
+		n = find_next_to_sort(a, &i, &dir);
+		if (n == 0)
+			break ;
+		while (HEAD(a, 0) != n)
+			do_op(a, b, &cur, dir == 0 ? "ra" : "rra");
+		do_op(a, b, &cur, "pb");
+		while (TAIL(a, 0) != i)
+			do_op(a, b, &cur, dir == 0 ? "rra" : "ra");
+		do_op(a, b, &cur, "pa");
+		i = n;
+	}
+	set_min_to_head(a, &cur);
+	free_stack(b);
+}
+
+/*
 static void	sort_stack(t_stack *a, t_oplst **lst, t_flag *f)
 {
 	t_stack	*b;
@@ -100,7 +153,7 @@ static void	sort_stack(t_stack *a, t_oplst **lst, t_flag *f)
 	}
 	free_stack(b);
 }
-
+*/
 
 int			pushswap(t_stack *a, t_flag *flag)
 {
@@ -112,6 +165,7 @@ int			pushswap(t_stack *a, t_flag *flag)
 	flag->max = biggest(a->array, a->size);
 	lst = NULL;
 	//length = naive_sort(a, &lst, flag);
+	ft_printf("Start sort.\n");
 	sort_stack(a, &lst, flag);
 	ft_printf("Done\n");
 	//if (length == -1)
