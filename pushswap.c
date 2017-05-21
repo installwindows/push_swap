@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 01:42:08 by varnaud           #+#    #+#             */
-/*   Updated: 2017/05/20 19:12:55 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/05/21 00:52:21 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,30 +75,46 @@ int			naive_sort(t_stack *a, t_oplst **lst, t_flag *f)
 	free_stack(b);
 	return (length);
 }*/
-static int	find_next_to_sort(t_stack *a, int *i, int *dir)
+static void	find_next_to_sort(t_stack *a, int *i, int *dir)
 {
-	int		n;
 	int		k;
 
-	n = 0;
-	k = 0;
-	while (k < a->size)
-	{
+	k = a->size;
+	while (--k >= 0)
 		if (a->array[k] == *i)
 			break ;
-		k++;
-	}
 	while (1)
 	{
-		k++;
-		if (k >= a->size)
-			k = 0;
-		if (a->array[k] != *i + 1)
+		k--;
+		if (k < 0)
+			k = a->size - 1;
+		if (a->array[k] != ++(*i))
 			break ;
-		else
-			*++i;
 	}
+	k = 0;
+	while (k < a->size && a->array[k] != *i)
+		k++;
+	*dir = k > a->size / 2 ? 0 : 1;
 }
+
+static void	set_min_to_head(t_stack *a, t_oplst ***cur, t_flag *f)
+{
+	int		i;
+
+	i = a->size;
+	while (--i >= 0)
+		if (a->array[i] == f->min)
+			break ;
+	if (a->size - i == 1)
+		return ;
+	if (a->size / 2 < i)
+		while (a->array[a->size - 1] != f->min)
+			do_op(a, NULL, cur, "ra");
+	else
+		while (a->array[a->size - 1] != f->min)
+			do_op(a, NULL, cur, "rra");
+}
+
 #define HEAD(a, n) a->array[a->size - 1 - n]
 #define TAIL(a, n) a->array[n]
 #define MIN f->min
@@ -107,7 +123,6 @@ static void	sort_stack(t_stack *a, t_oplst **lst, t_flag *f)
 	t_stack	*b;
 	t_oplst	**cur;
 	int		i;
-	int		n;
 	int		dir;
 
 	cur = lst;
@@ -115,18 +130,20 @@ static void	sort_stack(t_stack *a, t_oplst **lst, t_flag *f)
 	i = 1;
 	while (!(array_cmp(f->stack->array, f->stack->size, a->array, a->size)))
 	{
-		n = find_next_to_sort(a, &i, &dir);
-		if (n == 0)
+		find_next_to_sort(a, &i, &dir);
+		if (i > f->max)
 			break ;
-		while (HEAD(a, 0) != n)
+		while (HEAD(a, 0) != i)
 			do_op(a, b, &cur, dir == 0 ? "ra" : "rra");
 		do_op(a, b, &cur, "pb");
-		while (TAIL(a, 0) != i)
+		while (TAIL(a, 0) != i - 1)
 			do_op(a, b, &cur, dir == 0 ? "rra" : "ra");
 		do_op(a, b, &cur, "pa");
-		i = n;
 	}
-	set_min_to_head(a, &cur);
+	set_min_to_head(a, &cur, f);
+	i = a->size;
+	while (--i >= 0)
+		ft_printf(i > 0 ? "%d " : "%d\n", a->array[i]);
 	free_stack(b);
 }
 
@@ -166,17 +183,23 @@ int			pushswap(t_stack *a, t_flag *flag)
 	lst = NULL;
 	//length = naive_sort(a, &lst, flag);
 	ft_printf("Start sort.\n");
+int	i = a->size;
+	while (--i >= 0)
+		ft_printf(i > 0 ? "%d " : "%d\n", a->array[i]);
 	sort_stack(a, &lst, flag);
 	ft_printf("Done\n");
 	//if (length == -1)
 	//	return (-1);
 	//ft_printf("length: %d\n", length);
 	cur = lst;
+	int		ayy = 0;
 	while (lst)
 	{
+		ayy++;
 		ft_fprintf(flag->fdout, "%s\n", lst->op);
 		lst = lst->next;
 	}
+	printf("Total: %d\n", ayy);
 	cleanup(cur);
 	return (0);
 }
