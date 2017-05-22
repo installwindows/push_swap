@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 15:52:54 by varnaud           #+#    #+#             */
-/*   Updated: 2017/05/21 17:21:09 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/05/21 17:40:11 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,29 +53,7 @@ static int	cleanup(t_flag *f)
 	}
 	return (1);
 }
-/*
-static void	print_flag(t_flag *flag)
-{
-	int		i;
 
-	ft_printf("flags: %s\n", flag->flagorder);
-	ft_printf("flag: %b\n", flag->flag);
-	ft_printf("input: %s\n", flag->input);
-	ft_printf("output: %s\n", flag->output);
-	ft_printf("numfile: %s\n", flag->numfile);
-	ft_printf("stack:\n");
-	ft_printf("size: %d\n", flag->stack->size);
-	i = 0;
-	while (i < flag->stack->size)
-		ft_printf("%d ~ ", flag->stack->array[i++]);
-	ft_printf("\na:\n");
-	ft_printf("size: %d\n", flag->a->size);
-	i = 0;
-	while (i < flag->a->size)
-		ft_printf("%d ~ ", flag->a->array[i++]);
-	ft_printf("\n");
-}
-*/
 int			main(int argc, char **argv)
 {
 	t_flag	*flag;
@@ -86,9 +64,8 @@ int			main(int argc, char **argv)
 		return (1);
 	}
 	set_flag(flag);
-	//print_flag(flag);
-	//exit(0);
-	checker(flag->a, flag->b, flag->fdin, flag);
+	if (checker(flag->a, flag->b, flag->fdin, flag))
+		ft_fprintf(2, "Error\n");
 	cleanup(flag);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 15:23:12 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/26 15:30:06 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/05/21 18:11:32 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,7 @@ t_stack		*create_stack(int *array, int size)
 	t_stack	*stack;
 	int		i;
 
-	stack = malloc(sizeof(t_stack));
-	if (stack == NULL)
+	if (!(stack = malloc(sizeof(t_stack))))
 		return (NULL);
 	stack->max_size = size * 2 + 1;
 	stack->size = 0;

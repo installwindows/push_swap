@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 00:35:04 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/26 15:24:44 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/05/21 18:12:32 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct		s_flag
 	int				fdin;
 	int				fdout;
 	int				fdnum;
+	int				length;
 	char			flagorder[1];
 }					t_flag;
 
@@ -45,7 +46,5 @@ int					check_doublon(int *a, int size);
 int					array_cmp(int *a, int sizea, int *s, int sizes);
 int					*sort(int *a, int size);
 int					*revarr(int *a, int size);
-int					smallest(int *a, int size);
-int					biggest(int *a, int size);
 
 #endif

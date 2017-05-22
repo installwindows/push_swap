@@ -6,7 +6,7 @@
 #    By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/19 14:14:26 by varnaud           #+#    #+#              #
-#    Updated: 2017/05/19 18:07:42 by varnaud          ###   ########.fr        #
+#    Updated: 2017/05/21 18:21:15 by varnaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,7 @@ CHECKER_SRC=stack.c \
 			checker.c \
 			utils.c \
 			parse_argument.c \
-			parse_number.c \
-			stack_info.c
+			parse_number.c
 
 PUSHSWAP_SRC=main_pushswap.c \
 			utils.c \
@@ -31,7 +30,8 @@ PUSHSWAP_SRC=main_pushswap.c \
 			pushswap.c \
 			parse_argument.c \
 			parse_number.c \
-			stack_info.c
+			sort_5.c \
+			sort_x.c
 
 CHECKER_OBJ=$(CHECKER_SRC:.c=.o)
 PUSHSWAP_OBJ=$(PUSHSWAP_SRC:.c=.o)
@@ -57,7 +57,7 @@ clean:
 	-make -C libft clean
 	-rm -rf $(CHECKER_OBJ) $(PUSHSWAP_OBJ)
 
-fclean:
+fclean: clean
 	-make -C libft fclean
 	-rm -rf $(CHECKER_NAME) $(PUSHSWAP_NAME)
 

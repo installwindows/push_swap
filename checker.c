@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 22:04:36 by varnaud           #+#    #+#             */
-/*   Updated: 2017/05/21 17:19:14 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/05/21 18:07:36 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,38 +57,27 @@ static int		cleanup(t_oplst *lst, char *line)
 	return (0);
 }
 
-static void		check_stack(t_stack *a, t_flag *flag)
+static int		eval_operation(t_oplst *cur, t_stack *a, t_stack *b,
+				t_flag *flag)
 {
+	t_oplst	*lst;
+
+	lst = cur;
+	while (cur)
+	{
+		execute(cur->op, a, b);
+		cur = cur->next;
+	}
 	if (array_cmp(a->array, a->size, flag->stack->array, flag->stack->size))
 		ft_fprintf(flag->fdout,
 				flag->flag & FLAG_C ? "\e[1m\e[92mOK\e[0m\e[39m\n" : "OK\n");
 	else
 		ft_fprintf(flag->fdout,
 				flag->flag & FLAG_C ? "\e[1m\e[91mKO\e[0m\e[39m\n" : "KO\n");
-}
-
-static int		eval_operation(t_oplst *cur, t_stack *a, t_stack *b,
-				t_flag *flag)
-{
-	int		r;
-	t_oplst	*lst;
-	int		length;
-
-	lst = cur;
-	r = 0;
-	length = 0;
-	while (cur)
-	{
-		if ((r = execute(cur->op, a, b)))
-			break ;
-		cur = cur->next;
-		length++;
-	}
-	if (!r)
-		check_stack(a, flag);
 	cleanup(lst, NULL);
-	ft_printf(flag->flag & FLAG_D ? "Length: %d\n" : "%.0s", length);
-	return (r);
+	if (flag->flag & FLAG_D)
+		ft_printf("Length: %d\n", flag->length);
+	return (0);
 }
 
 static int		add_op(t_oplst ***cur, char *line)
@@ -99,7 +88,12 @@ static int		add_op(t_oplst ***cur, char *line)
 	(**cur)->op = ft_strdup(line);
 	(**cur)->next = NULL;
 	*cur = &(**cur)->next;
-	return (0);
+	return (ft_strcmp(line, "sa") && ft_strcmp(line, "sb") &&
+			ft_strcmp(line, "ss") && ft_strcmp(line, "pa") &&
+			ft_strcmp(line, "pb") && ft_strcmp(line, "ra") &&
+			ft_strcmp(line, "rb") && ft_strcmp(line, "rr") &&
+			ft_strcmp(line, "rra") && ft_strcmp(line, "rrb") &&
+			ft_strcmp(line, "rrr"));
 }
 
 int				checker(t_stack *a, t_stack *b, int fd, t_flag *flag)
@@ -119,11 +113,11 @@ int				checker(t_stack *a, t_stack *b, int fd, t_flag *flag)
 		if (flag->flag & FLAG_V)
 		{
 			if ((r = execute(line, a, b)))
-				print_stack(a, b,flag, "Error");
-			else
+				print_stack(a, b, flag, "Error");
+			else if (++(flag->length) || 1)
 				print_stack(a, b, flag, line);
 		}
-		else if (add_op(&cur, line))
+		else if (add_op(&cur, line) && (++(flag->length) || 1))
 			return (!cleanup(lst, line));
 		free(line);
 	}

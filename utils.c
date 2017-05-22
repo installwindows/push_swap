@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 00:34:11 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/26 22:17:53 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/05/21 18:13:20 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,30 +37,7 @@ int		ft_natoi(char *s, int *n)
 		*n *= -1;
 	return (0);
 }
-/*
-int		*parse_number(char **numbers, int size)
-{
-	int		*array;
-	int		n;
 
-	if (size < 1 || numbers == NULL)
-		return (NULL);
-	array = malloc(sizeof(int) * size);
-	if (array == NULL)
-		return (NULL);
-	while (size)
-	{
-		if (ft_natoi(*numbers, &n))
-		{
-			free(array);
-			return (NULL);
-		}
-		array[--size] = n;
-		numbers++;
-	}
-	return (array);
-}
-*/
 int		check_doublon(int *a, int size)
 {
 	int		i;

@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 00:30:13 by varnaud           #+#    #+#             */
-/*   Updated: 2017/05/21 03:36:54 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/05/21 17:28:10 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	set_flag(t_flag *f)
 	}
 }
 
-int		main(int argc, char **argv)
+int			main(int argc, char **argv)
 {
 	t_flag	*flag;
 
