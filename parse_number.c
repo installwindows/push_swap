@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/23 21:27:19 by varnaud           #+#    #+#             */
-/*   Updated: 2017/05/21 21:36:41 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/05/21 22:10:07 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ static t_stack	*parse_numarg(char **argv, int i)
 		return (NULL);
 	while (argv[i])
 	{
+		if (argv[i][0] == '\0')
+			return (cleanup(NULL, 0, stack, NULL));
 		if (ft_natoi(argv[i], &n) || push(stack, n))
 			return (cleanup(NULL, 0, stack, NULL));
 		i++;
