@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 00:40:09 by varnaud           #+#    #+#             */
-/*   Updated: 2017/05/21 18:23:11 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/05/21 20:47:31 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,11 @@
 # define TAIL(a, n) a->array[n]
 
 int		pushswap(t_stack *a, t_flag *flag);
-void 	sort_5(t_stack *a, t_oplst **lst, t_flag *f);
+void	sort_rev_3(t_stack *b, t_oplst ***cur);
+void	sort_5(t_stack *a, t_oplst **lst, t_flag *f);
 void	sort_x(t_stack *a, t_oplst **lst, t_flag *f);
 int		do_op(t_stack *a, t_stack *b, t_oplst ***cur, const char *op);
 void	find_min_max(t_stack *s, int *min, int *max);
+void	set_max_maxx(t_stack *a, t_flag *f, int *maxx, int *pmax);
 
 #endif

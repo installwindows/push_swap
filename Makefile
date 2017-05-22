@@ -6,7 +6,7 @@
 #    By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/19 14:14:26 by varnaud           #+#    #+#              #
-#    Updated: 2017/05/21 18:21:15 by varnaud          ###   ########.fr        #
+#    Updated: 2017/05/21 21:01:28 by varnaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,11 +31,12 @@ PUSHSWAP_SRC=main_pushswap.c \
 			parse_argument.c \
 			parse_number.c \
 			sort_5.c \
-			sort_x.c
+			sort_x.c \
+			sort_5_helper.c
 
 CHECKER_OBJ=$(CHECKER_SRC:.c=.o)
 PUSHSWAP_OBJ=$(PUSHSWAP_SRC:.c=.o)
-CFLAGS=-Wall -Wextra -g -Ilibft
+CFLAGS=-Wall -Wextra -g -Ilibft -Werror
 CC=gcc
 
 all: $(CHECKER_NAME) $(PUSHSWAP_NAME) operation.h stack.h utils.h
