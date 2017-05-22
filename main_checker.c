@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 15:52:54 by varnaud           #+#    #+#             */
-/*   Updated: 2017/05/21 17:40:11 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/05/21 21:06:53 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ int			main(int argc, char **argv)
 {
 	t_flag	*flag;
 
+	if (argc == 1)
+		return (0);
 	if (!(flag = parse_argument(argc, argv, "vciond")))
 	{
 		ft_fprintf(2, "Error\n");

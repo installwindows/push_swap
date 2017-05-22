@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 22:04:36 by varnaud           #+#    #+#             */
-/*   Updated: 2017/05/21 18:07:36 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/05/21 21:14:52 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int				checker(t_stack *a, t_stack *b, int fd, t_flag *flag)
 			else if (++(flag->length) || 1)
 				print_stack(a, b, flag, line);
 		}
-		else if (add_op(&cur, line) && (++(flag->length) || 1))
+		else if (add_op(&cur, line) || (!++(flag->length)))
 			return (!cleanup(lst, line));
 		free(line);
 	}

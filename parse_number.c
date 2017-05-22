@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/23 21:27:19 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/24 00:29:16 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/05/21 21:36:41 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ static void		*cleanup(char **split, int i, t_stack *stack, char *line)
 {
 	if (split)
 	{
-		while (i)
-			free(split[i--]);
+		while (split[i])
+			free(split[i++]);
 		free(split);
 	}
 	if (stack)
@@ -26,8 +26,8 @@ static void		*cleanup(char **split, int i, t_stack *stack, char *line)
 			free(stack->array);
 		free(stack);
 	}
-	if (line)
-		free(line);
+	free(line);
+	gnl(-42, NULL);
 	return (NULL);
 }
 
