@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 21:39:16 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/23 22:37:34 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/05/21 17:15:16 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define FLAG_I 4
 # define FLAG_O 8
 # define FLAG_N 16
+# define FLAG_D 32
 # define GTR(a, b) ((a > b) ? a : b)
 
 int					checker(t_stack *a, t_stack *b, int fd, t_flag *flag);

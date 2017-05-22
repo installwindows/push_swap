@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 01:42:08 by varnaud           #+#    #+#             */
-/*   Updated: 2017/05/21 06:17:15 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/05/21 17:20:49 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,7 @@ int			cleanup(t_oplst *lst)
 	}
 	return (0);
 }
-/*
-int			do_op(t_stack *a, t_stack *b, t_oplst **lst, const char *op)
-{
-	t_oplst	**cur;
 
-	cur = lst;
-	while (*cur)
-		cur = &(*cur)->next;
-	if (!(*cur = malloc(sizeof(t_oplst))))
-		return (-1);
-	(*cur)->op = ft_strdup(op);
-	(*cur)->next = NULL;
-	return (execute(op, a, b));
-}
-*/
 int			do_op(t_stack *a, t_stack *b, t_oplst ***cur, const char *op)
 {
 	**cur = malloc(sizeof(t_oplst));
@@ -48,33 +34,7 @@ int			do_op(t_stack *a, t_stack *b, t_oplst ***cur, const char *op)
 	*cur = &(**cur)->next;
 	return (execute(op, a, b));
 }
-/*
-int			naive_sort(t_stack *a, t_oplst **lst, t_flag *f)
-{
-	int		length;
-	int		top;
-	int		r;
-	t_stack	*b;
 
-	if (!(b = create_stack(NULL, a->size)))
-		return (1);
-	length = 0;
-	top = a->size - 1;
-	while (!array_cmp(a->array, a->size, f->stack->array, f->stack->size))
-	{
-		if (a->array[top] == f->max && a->array[top - 1] == f->min)
-			r = do_op(a, b, lst, "ra");
-		else if (a->array[top] > a->array[top - 1])
-			r = do_op(a, b, lst, "sa");
-		else
-			r = do_op(a, b, lst, "ra");
-		if (r)
-			return (-1);
-		length++;
-	}
-	free_stack(b);
-	return (length);
-}*/
 static void	find_next_to_sort(t_stack *a, int *i, int *dir)
 {
 	int		k;
@@ -115,9 +75,6 @@ static void	set_min_to_head(t_stack *a, t_oplst ***cur, t_flag *f)
 			do_op(a, NULL, cur, "rra");
 }
 
-#define HEAD(a, n) a->array[a->size - 1 - n]
-#define TAIL(a, n) a->array[n]
-#define MIN f->min
 static void	sort_stack(t_stack *a, t_oplst **lst, t_flag *f)
 {
 	t_stack	*b;
@@ -183,17 +140,17 @@ static void	sort_3(t_stack *a, t_oplst **lst, t_flag *f)
 	}
 }
 
-static void	set_minmax(t_stack *a, t_flag *f, int *pmin, int *pmax)
+static void	set_max_maxx(t_stack *a, t_flag *f, int *maxx, int *pmax)
 {
 	int		i;
 
-	*pmin = 0;
+	*maxx = -2147438648;
 	*pmax = 0;
 	i = a->size;
 	while (i-- >= 0)
 	{
-		if (a->array[i] == f->min)
-			*pmin = a->size - i - 1;
+		if (a->array[i] != f->max && a->array[i] > *maxx)
+			*maxx = a->array[i];
 		if (a->array[i] == f->max)
 			*pmax = a->size - i - 1;
 	}
@@ -251,16 +208,16 @@ static void sort_5(t_stack *a, t_oplst **lst, t_flag *f)
 	t_stack	*b;
 	t_oplst	**cur;
 	int		pmax;
-	int		pmin;
+	int		maxx;
 
 	cur = lst;
 	b = create_stack(NULL, a->size);
-	set_minmax(a, f, &pmin, &pmax);
+	set_max_maxx(a, f, &maxx, &pmax);
 	while (TAIL(a, 0) != f->max)
 	{
-		if (HEAD(a, 0) != f->max && HEAD(a, 0) != 4 &&  HEAD(a, 0) > HEAD(a, 1))
+		if (HEAD(a, 0) != f->max && HEAD(a, 0) != maxx &&  HEAD(a, 0) > HEAD(a, 1))
 			do_op(a, b, &cur, "sa");
-		else if ((HEAD(a, 1) == f->max && HEAD(a, 0) != 4) && HEAD(a, 0) < HEAD(a, 1))
+		else if ((HEAD(a, 1) == f->max && HEAD(a, 0) != maxx) && HEAD(a, 0) < HEAD(a, 1))
 			do_op(a, b, &cur, "pb");
 
 		else
@@ -278,52 +235,61 @@ static void sort_5(t_stack *a, t_oplst **lst, t_flag *f)
 	do_op(a, b, &cur, "pa");
 	do_op(a, b, &cur, "pa");
 	do_op(a, b, &cur, "pa");
-	/*
-	if (pmax < 3)
-	{
-		
-	}
-	else if (pmax > 3)
-	{
-	}
-	else
-	{
-		if (HEAD(a, 0) > HEAD(a, 1))
-			do_op(a, NULL, &cur, "sa");
-		else if (HEAD(a, 0) < HEAD(a, 1))
-		{
-			do_op(a, b, &cur, "pb");
-			do_op(a, b, &cur, "pb");
-		}
-	}
-	*/
+	free_stack(b);
 }
 
+static int	next_min(t_stack *a, int min, int max)
+{
+	int		i;
+	int		tmp;
 
-/*
-static void	sort_stack(t_stack *a, t_oplst **lst, t_flag *f)
+	tmp = max;
+	i = a->size;
+	while (--i >= 0)
+	{
+		if (a->array[i] < tmp && a->array[i] > min)
+			tmp = a->array[i];
+	}
+	return (tmp);
+}
+
+static int	min_location(t_stack *a, int min)
+{
+	int		i;
+
+	i = a->size;
+	while (--i >= 0)
+		if (a->array[i] == min)
+			return (a->size - i - 1);
+	return (i);
+}
+
+static void	sort_x(t_stack *a, t_oplst **lst, t_flag *f)
 {
 	t_stack	*b;
 	t_oplst	**cur;
+	int		min;
+	int		step;
 
 	cur = lst;
 	b = create_stack(NULL, a->size);
-	while (!(array_cmp(f->stack->array, f->stack->size, a->array, a->size)))
+	min = f->min;
+	step = min_location(a, min);
+	while (min < f->max)
 	{
-		if (HEAD(a, 0) == MAX && HEAD(a, 1) == MIN)
-			do_op(a, b, &cur, "ra");
-		if (HEAD(a, 0) + 1 != HEAD(a, 1) && HEAD(a, 1) != MIN)
+		if (HEAD(a, 0) == min)
+		{
 			do_op(a, b, &cur, "pb");
+			min = next_min(a, min, f->max);
+			step = min_location(a, min);
+		}
 		else
-			do_op(a, b, &cur, "ra");
-		if (b->size && HEAD(b, 0) + 1 == HEAD(a, 0))
-			do_op(a, b, &cur, "pa");
-		else if (b->size && HEAD(b, 0) + 1 != HEAD(a, 0))
-			do_op(a, b, &cur, "rb");
+			do_op(a, NULL, &cur, step > a->size / 2 ? "rra" : "ra");
 	}
+	while (b->size)
+		do_op(a, b, &cur, "pa");
 	free_stack(b);
 }
-*/
 
 int			pushswap(t_stack *a, t_flag *flag)
 {
@@ -331,8 +297,8 @@ int			pushswap(t_stack *a, t_flag *flag)
 	t_oplst	*cur;
 	int		length;
 
-	flag->min = smallest(a->array, a->size);
-	flag->max = biggest(a->array, a->size);
+
+	find_min_max(a, &flag->min, &flag->max);
 	lst = NULL;
 	if (array_cmp(flag->stack->array, flag->stack->size, a->array, a->size))
 		;
@@ -340,21 +306,10 @@ int			pushswap(t_stack *a, t_flag *flag)
 		sort_2(a, &lst, flag);
 	else if (a->size == 3)
 		sort_3(a, &lst, flag);
-	else
-	{
+	else if (a->size == 5)
 		sort_5(a, &lst, flag);
-		/*
-		//length = naive_sort(a, &lst, flag);
-		ft_printf("Start sort.\n");
-	int	i = a->size;
-		while (--i >= 0)
-			ft_printf(i > 0 ? "%d " : "%d\n", a->array[i]);
-		sort_stack(a, &lst, flag);
-		ft_printf("Done\n");
-		//if (length == -1)
-		//	return (-1);
-		//ft_printf("length: %d\n", length);*/
-	}
+	else
+		sort_x(a, &lst, flag);
 	cur = lst;
 	length = 0;
 	while (lst)

@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 15:52:54 by varnaud           #+#    #+#             */
-/*   Updated: 2017/04/26 22:28:29 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/05/21 17:21:09 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ static void	set_flag(t_flag *f)
 			f->flag |= FLAG_O;
 		else if (c == 'n')
 			f->flag |= FLAG_N;
+		else if (c == 'd')
+			f->flag |= FLAG_D;
 		i++;
 	}
 }
@@ -78,7 +80,7 @@ int			main(int argc, char **argv)
 {
 	t_flag	*flag;
 
-	if (!(flag = parse_argument(argc, argv, "vcion")))
+	if (!(flag = parse_argument(argc, argv, "vciond")))
 	{
 		ft_fprintf(2, "Error\n");
 		return (1);
@@ -86,14 +88,6 @@ int			main(int argc, char **argv)
 	set_flag(flag);
 	//print_flag(flag);
 	//exit(0);
-	if (flag->stack->size % 2 == 0)
-	{
-		flag->med = ((float)flag->stack->array[flag->stack->size / 2] +
-			(float)flag->stack->array[(flag->stack->size) / 2 - 1]) / 2.0;
-	}
-	else
-		flag->med = flag->stack->array[flag->stack->size / 2];
-	ft_printf("med: %d\n", flag->med);
 	checker(flag->a, flag->b, flag->fdin, flag);
 	cleanup(flag);
 	return (0);

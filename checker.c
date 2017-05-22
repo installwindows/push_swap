@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 22:04:36 by varnaud           #+#    #+#             */
-/*   Updated: 2017/05/16 20:58:39 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/05/21 17:19:14 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,18 +72,22 @@ static int		eval_operation(t_oplst *cur, t_stack *a, t_stack *b,
 {
 	int		r;
 	t_oplst	*lst;
+	int		length;
 
 	lst = cur;
 	r = 0;
+	length = 0;
 	while (cur)
 	{
 		if ((r = execute(cur->op, a, b)))
 			break ;
 		cur = cur->next;
+		length++;
 	}
 	if (!r)
 		check_stack(a, flag);
 	cleanup(lst, NULL);
+	ft_printf(flag->flag & FLAG_D ? "Length: %d\n" : "%.0s", length);
 	return (r);
 }
 
@@ -104,9 +108,7 @@ int				checker(t_stack *a, t_stack *b, int fd, t_flag *flag)
 	char	*line;
 	t_oplst	*lst;
 	t_oplst	**cur;
-	int		LENGTH;
 
-	LENGTH = 0;
 	if (!(lst = NULL) && flag->flag & FLAG_V)
 		print_stack(a, b, flag, "");
 	cur = &lst;
@@ -119,15 +121,11 @@ int				checker(t_stack *a, t_stack *b, int fd, t_flag *flag)
 			if ((r = execute(line, a, b)))
 				print_stack(a, b,flag, "Error");
 			else
-			{
-				LENGTH++;
 				print_stack(a, b, flag, line);
-			}
 		}
 		else if (add_op(&cur, line))
 			return (!cleanup(lst, line));
 		free(line);
 	}
-	ft_printf("Length: %d\n", LENGTH);
 	return (eval_operation(lst, a, b, flag));
 }
