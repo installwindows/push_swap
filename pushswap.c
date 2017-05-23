@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 01:42:08 by varnaud           #+#    #+#             */
-/*   Updated: 2017/05/21 18:26:18 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/05/22 21:26:31 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,31 +44,28 @@ static void	sort_2(t_stack *a, t_oplst **lst, t_flag *f)
 		do_op(a, NULL, &cur, "sa");
 }
 
-static void	sort_3(t_stack *a, t_oplst **lst, t_flag *f)
+void		sort_3(t_stack *s, t_oplst **cur, char c)
 {
-	t_oplst	**cur;
-
-	cur = lst;
-	if (a->array[2] != f->max && a->array[2] != f->min)
+	if (s->array[2] != s->max && s->array[2] != s->min)
 	{
-		if (a->array[1] == f->min)
-			do_op(a, NULL, &cur, "sa");
+		if (s->array[1] == s->min)
+			do_op(s, NULL, &cur, c == 'a' ? "sa" : "sb");
 		else
-			do_op(a, NULL, &cur, "rra");
+			do_op(s, NULL, &cur, c == 'a' ? "rra" : "rrb");
 	}
-	else if (a->array[2] == f->min)
+	else if (s->array[2] == s->min)
 	{
-		if (a->array[1] == f->max)
+		if (s->array[1] == s->max)
 		{
-			do_op(a, NULL, &cur, "rra");
-			do_op(a, NULL, &cur, "sa");
+			do_op(s, NULL, &cur, c == 'a' ? "rra" : "rrb");
+			do_op(s, NULL, &cur, c == 'a' ? "sa" : "sb");
 		}
 	}
-	else if (a->array[2] == f->max)
+	else if (s->array[2] == s->max)
 	{
-		do_op(a, NULL, &cur, "ra");
-		if (a->array[2] != f->min)
-			do_op(a, NULL, &cur, "sa");
+		do_op(s, NULL, &cur, c == 'a' ? "ra" : "rb");
+		if (s->array[2] != s->min)
+			do_op(s, NULL, &cur, c == 'a' ? "sa" : "sb");
 	}
 }
 
@@ -77,14 +74,14 @@ int			pushswap(t_stack *a, t_flag *flag)
 	t_oplst	*lst;
 	t_oplst	*cur;
 
-	find_min_max(a, &flag->min, &flag->max);
+	ft_find_min_max(a->array, a->size, &flag->min, &flag->max);
 	lst = NULL;
 	if (array_cmp(flag->stack->array, flag->stack->size, a->array, a->size))
 		;
 	else if (a->size == 2)
 		sort_2(a, &lst, flag);
 	else if (a->size == 3)
-		sort_3(a, &lst, flag);
+		sort_3(a, &lst, 'a');
 	else if (a->size == 5)
 		sort_5(a, &lst, flag);
 	else

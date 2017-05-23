@@ -1,34 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack.h                                            :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/19 15:23:55 by varnaud           #+#    #+#             */
-/*   Updated: 2017/05/22 21:26:58 by varnaud          ###   ########.fr       */
+/*   Created: 2017/05/04 22:58:16 by varnaud           #+#    #+#             */
+/*   Updated: 2017/05/04 23:03:19 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STACK_H
-# define STACK_H
-# include <stdlib.h>
-# include "libft.h"
+#include "libft.h"
 
-typedef struct	s_stack
+char	*ft_strndup(const char *s1, size_t n)
 {
-	int			*array;
-	int			max_size;
-	int			size;
-	int			top;
-	int			min;
-	int			max;
-	int			med;
-}				t_stack;
+	char	*dup;
+	char	*tmp;
 
-int				push(t_stack *stack, int value);
-int				pop(t_stack *stack, int *value);
-t_stack			*create_stack(int *array, int size);
-void			*free_stack(t_stack *stack);
-
-#endif
+	dup = malloc(sizeof(char) * (n + 1));
+	if (dup == NULL)
+		return (NULL);
+	tmp = dup;
+	while (n-- && *s1)
+		*tmp++ = *s1++;
+	*tmp = '\0';
+	return (dup);
+}

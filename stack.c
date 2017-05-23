@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 15:23:12 by varnaud           #+#    #+#             */
-/*   Updated: 2017/05/21 18:11:32 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/05/22 21:30:52 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,12 @@ int			push(t_stack *stack, int value)
 	if (stack->size == stack->max_size)
 		if (update_stack(stack, stack->max_size * 2 + 1))
 			return (-1);
+	if (stack->size < 2)
+		ft_find_min_max(stack->array, stack->size, &stack->min, &stack->max);
+	else if (value > stack->max)
+		stack->max = value;
+	else if (value < stack->min)
+		stack->min = value;
 	stack->top = stack->size;
 	stack->array[stack->size++] = value;
 	return (0);
@@ -57,6 +63,9 @@ int			pop(t_stack *stack, int *value)
 	if (stack->size > 0)
 	{
 		*value = stack->array[--stack->size];
+		if (*value == stack->max || *value == stack->min)
+			ft_find_min_max(stack->array, stack->size, &stack->min,
+							&stack->max);
 		stack->top = stack->size - 1;
 	}
 	else
@@ -76,8 +85,7 @@ t_stack		*create_stack(int *array, int size)
 		return (NULL);
 	stack->max_size = size * 2 + 1;
 	stack->size = 0;
-	stack->array = malloc(sizeof(int) * stack->max_size);
-	if (stack->array == NULL)
+	if (!(stack->array = malloc(sizeof(int) * stack->max_size)))
 	{
 		free(stack);
 		return (NULL);
@@ -90,7 +98,7 @@ t_stack		*create_stack(int *array, int size)
 			i++;
 		}
 		stack->size = size;
-		return (stack);
+		ft_find_min_max(stack->array, stack->size, &stack->min, &stack->max);
 	}
 	stack->top = stack->size - 1;
 	return (stack);

@@ -6,7 +6,7 @@
 #    By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/11 17:57:00 by varnaud           #+#    #+#              #
-#    Updated: 2017/04/22 22:52:20 by varnaud          ###   ########.fr        #
+#    Updated: 2017/05/22 21:19:00 by varnaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -108,7 +108,9 @@ FTSRC	=	ft_abs.c \
 			ft_env.c \
 			ft_strsubs.c \
 			ft_strcjoin.c \
-			ft_split.c
+			ft_split.c \
+			ft_strndup.c \
+			ft_find_min_max.c
 PFDIR	=	ft_printf/
 PFSRC	=	ft_printf.c \
 			handle_string.c \
@@ -140,7 +142,7 @@ PFSRC	=	ft_printf.c \
 SRC = $(FTSRC) $(addprefix $(PFDIR), $(PFSRC))
 OBJ = $(SRC:.c=.o)
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -I. -I$(PFDIR)
+CFLAGS = -g -Wall -Werror -Wextra -I. -I$(PFDIR)
 
 .PHONY: clean fclean all re
 
