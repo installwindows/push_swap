@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/22 16:50:55 by varnaud           #+#    #+#             */
-/*   Updated: 2017/05/22 23:06:55 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/05/23 22:12:36 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,47 @@ typedef struct	s_s
 	int			total;
 	int			dir_a;
 	int			dir_b;
+	int			ra;
+	int			rra;
+	int			rb;
+	int			rrb;
+	int			rr;
+	int			rrr;
 }				t_s;
 
-void	calculate_b(t_s *tmp, t_stack *b)
+void	calculate_b(t_s *n, t_stack *b)
 {
+	int		up;
+	int		down;
+	int		i;
+	int		j;
+
+	up = -2147483648;
+	down = 2147483647;
+	i = b->size;
+	if (b->num > b->max)
+	{
+	}
+	else if (b->num < b->min)
+	{
+	}
+	else
+	{
+		while (--i >= 0)
+		{
+			if (b->array[i] > n->num && b->array[i] < down)
+			{
+				down = b->array[i];
+				j = i;
+			}
+			else if (b->array[i] < n->num && b->array[i] > up)
+			{
+				up = b->array[i];
+				j = i;
+			}
+		}
+	}
+
 }
 
 void	calculate_total(t_s *tmp);
