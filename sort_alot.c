@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/22 16:50:55 by varnaud           #+#    #+#             */
-/*   Updated: 2017/05/23 22:12:36 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/05/24 17:23:32 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,37 +29,48 @@ typedef struct	s_s
 
 void	calculate_b(t_s *n, t_stack *b)
 {
-	int		up;
 	int		down;
+	char	*dir;
 	int		i;
 	int		j;
+	int		p_d;
 
-	up = -2147483648;
-	down = 2147483647;
+	down = -2147483648;
+	dir = "";
+	p_d = 0;
+	j = 0;
 	i = b->size;
-	if (b->num > b->max)
+	if (n->num > b->max)
 	{
+		while (--i >= 0)
+			if (b->array[i] == b->max)
+				break ;
 	}
-	else if (b->num < b->min)
+	else if (n->num < b->min)
 	{
+		while (--i >= 0)
+			if (b->array[i] == b->max)
+				break ;
+		j = i;
 	}
 	else
 	{
 		while (--i >= 0)
-		{
-			if (b->array[i] > n->num && b->array[i] < down)
+			if (b->array[i] < n->num && b->array[i] > down)
 			{
 				down = b->array[i];
+				p_d = i;
 				j = i;
 			}
-			else if (b->array[i] < n->num && b->array[i] > up)
-			{
-				up = b->array[i];
-				j = i;
-			}
-		}
+		if (p_d > j && p_d > size / 2)
+			j = p_d;
 	}
-
+	dir = j < size / 2 ? "rra" : "ra";
+	if (j == 0)
+		j = 1;
+	else
+		j = j < size / 2 ? j + 1: size - j - 1;
+	
 }
 
 void	calculate_total(t_s *tmp);
