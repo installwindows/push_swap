@@ -6,23 +6,26 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 01:42:08 by varnaud           #+#    #+#             */
-/*   Updated: 2017/05/25 00:26:40 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/05/25 01:08:21 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
 
-int			cleanup(t_oplst *lst)
+static int	display_op(t_oplst *lst, t_flag *flag)
 {
 	t_oplst	*cur;
 
 	while (lst)
 	{
 		cur = lst->next;
+		flag->length++;
+		ft_fprintf(flag->fdout, "%s\n", lst->op);
 		free(lst->op);
 		free(lst);
 		lst = cur;
 	}
+	ft_printf(flag->flag & FLAG_D ? "Total: %d\n" : "", flag->length);
 	return (0);
 }
 
@@ -69,34 +72,9 @@ void		sort_3(t_stack *s, t_oplst **cur, char c)
 	}
 }
 
-void		sort_4(t_stack *a, t_oplst **lst)
-{
-	t_oplst	**cur;
-	int		i;
-	t_stack	*b;
-
-	b = create_stack(NULL, a->size);
-	cur = lst;
-	i = a->size;
-	while (--i >= 0)
-		if (a->array[i] == a->max)
-			break ;
-	i = i < a->size / 2 ? 1 : 0;
-	while (a->array[0] != a->max)
-		do_op(a, b, &cur, i ? "rra" : "ra");
-	do_op(a, b, &cur, "pb");
-	do_op(a, b, &cur, "pb");
-	do_op(a, b, &cur, "pb");
-	sort_rev_3(b, &cur);
-	do_op(a, b, &cur, "pa");
-	do_op(a, b, &cur, "pa");
-	do_op(a, b, &cur, "pa");
-}
-
 int			pushswap(t_stack *a, t_flag *flag)
 {
 	t_oplst	*lst;
-	t_oplst	*cur;
 
 	ft_find_min_max(a->array, a->size, &flag->min, &flag->max);
 	lst = NULL;
@@ -112,14 +90,6 @@ int			pushswap(t_stack *a, t_flag *flag)
 		sort_5(a, &lst, flag);
 	else
 		sort_alot(a, &lst, flag);
-	cur = lst;
-	while (lst)
-	{
-		flag->length++;
-		ft_fprintf(flag->fdout, "%s\n", lst->op);
-		lst = lst->next;
-	}
-	ft_printf(flag->flag & FLAG_D ? "Total: %d\n" : "", flag->length);
-	cleanup(cur);
+	display_op(lst, flag);
 	return (0);
 }

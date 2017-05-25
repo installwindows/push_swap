@@ -6,7 +6,7 @@
 #    By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/19 14:14:26 by varnaud           #+#    #+#              #
-#    Updated: 2017/05/24 22:46:18 by varnaud          ###   ########.fr        #
+#    Updated: 2017/05/25 01:03:24 by varnaud          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,9 @@ PUSHSWAP_SRC=main_pushswap.c \
 			sort_5.c \
 			sort_x.c \
 			sort_5_helper.c \
-			sort_alot.c
+			sort_alot.c \
+			calculate.c \
+			sort_4.c
 
 CHECKER_OBJ=$(CHECKER_SRC:.c=.o)
 PUSHSWAP_OBJ=$(PUSHSWAP_SRC:.c=.o)
