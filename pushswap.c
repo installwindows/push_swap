@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 01:42:08 by varnaud           #+#    #+#             */
-/*   Updated: 2017/05/22 21:26:31 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/05/25 00:26:40 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,30 @@ void		sort_3(t_stack *s, t_oplst **cur, char c)
 	}
 }
 
+void		sort_4(t_stack *a, t_oplst **lst)
+{
+	t_oplst	**cur;
+	int		i;
+	t_stack	*b;
+
+	b = create_stack(NULL, a->size);
+	cur = lst;
+	i = a->size;
+	while (--i >= 0)
+		if (a->array[i] == a->max)
+			break ;
+	i = i < a->size / 2 ? 1 : 0;
+	while (a->array[0] != a->max)
+		do_op(a, b, &cur, i ? "rra" : "ra");
+	do_op(a, b, &cur, "pb");
+	do_op(a, b, &cur, "pb");
+	do_op(a, b, &cur, "pb");
+	sort_rev_3(b, &cur);
+	do_op(a, b, &cur, "pa");
+	do_op(a, b, &cur, "pa");
+	do_op(a, b, &cur, "pa");
+}
+
 int			pushswap(t_stack *a, t_flag *flag)
 {
 	t_oplst	*lst;
@@ -82,10 +106,12 @@ int			pushswap(t_stack *a, t_flag *flag)
 		sort_2(a, &lst, flag);
 	else if (a->size == 3)
 		sort_3(a, &lst, 'a');
+	else if (a->size == 4)
+		sort_4(a, &lst);
 	else if (a->size == 5)
 		sort_5(a, &lst, flag);
 	else
-		sort_x(a, &lst, flag);
+		sort_alot(a, &lst, flag);
 	cur = lst;
 	while (lst)
 	{

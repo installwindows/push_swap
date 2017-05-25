@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 15:23:12 by varnaud           #+#    #+#             */
-/*   Updated: 2017/05/22 21:30:52 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/05/24 23:48:55 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ int			push(t_stack *stack, int value)
 	if (stack->size == stack->max_size)
 		if (update_stack(stack, stack->max_size * 2 + 1))
 			return (-1);
+	stack->top = stack->size;
+	stack->array[stack->size++] = value;
 	if (stack->size < 2)
 		ft_find_min_max(stack->array, stack->size, &stack->min, &stack->max);
 	else if (value > stack->max)
 		stack->max = value;
 	else if (value < stack->min)
 		stack->min = value;
-	stack->top = stack->size;
-	stack->array[stack->size++] = value;
 	return (0);
 }
 
