@@ -6,7 +6,7 @@
 /*   By: varnaud <varnaud@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/25 01:02:24 by varnaud           #+#    #+#             */
-/*   Updated: 2017/05/25 01:03:07 by varnaud          ###   ########.fr       */
+/*   Updated: 2017/05/25 19:01:23 by varnaud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,5 @@ void	sort_4(t_stack *a, t_oplst **lst)
 	do_op(a, b, &cur, "pa");
 	do_op(a, b, &cur, "pa");
 	do_op(a, b, &cur, "pa");
+	free_stack(b);
 }
